@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author Vincent Renaville. Copyright 2013-2014 Camptocamp SA
+#    Author Arnaud GAY. Copyright 2013-2014 Awtol sarl Luxembourg
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as

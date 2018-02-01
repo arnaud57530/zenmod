@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Authors: Nicolas Bessi, Guewen Baconnier
-#    Copyright Camptocamp SA 2011
+#    Author Arnaud GAY. Copyright 2013-2014 Awtol sarl Luxembourg
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,10 +19,10 @@
 ##############################################################################
 {
     'name': 'Awtol Specifics',
-    'version': '8.0.1.2.0',
+    'version': '0.1',
     'author': (
-        "Denis Lemaire,"
-        "Zenwork"
+        "Arnaud GAY"
+        "Awtol"
     ),
     'license': 'AGPL-3',
     'category': 'Finance',
@@ -34,14 +33,8 @@
     'data': ['security/ir.model.access.csv',
              'zenawtol_view.xml',
              'zenawtol_report_view.xml'],
-    # tests order matter
     'test': [],
-    # 'tests/account_move_line.yml'
     'active': False,
     'installable': True,
     'application': True,
-    
-
-    
-    
 }
