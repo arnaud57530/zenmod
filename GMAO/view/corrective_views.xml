@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_corrective_filter" model="ir.ui.view">
+            <field name="name">corrective.select</field>
+            <field name="model">corrective</field>
+            <field name="arch" type="xml">
+                <search string="Chercher ...">
+<filter name="declare" string="Déclaré" domain="[('state','=','wait')]"/>
+<filter name="progress" string="Diagnostic" domain="[('state','=','progress')]"/>
+<filter name="done" string="Terminées" domain="[('state','=','done')]"/>
+
+
+                    <separator/>
+                    <filter string="Machine à l'arret" domain="[('arret','=', True)]" help="Arretée" icon="terp-personal"/>
+                    <filter string="Machine en marche" domain="[('arret','=', False)]" help="En marche" icon="terp-personal"/>
+                    <group expand="0" string="Regrouper par">
+                        <filter string="Machine" icon="terp-personal" context="{'group_by': 'equipment_id'}"/>
+                        <filter string="Panne" icon="terp-personal" context="{'group_by': 'panne'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="corrective_calendar">
+            <field name="name">Calendrier des correctives</field>
+            <field name="model">corrective</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar string="Maintenance corrective"
+                          date_start="date_from" color="panne">
+                    <field name="responsable"/>
+                    <field name="number_of_days"/>
+                </calendar>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_corrective_kanban">
+            <field name="name">corrective.kanban</field>
+            <field name="model">corrective</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state">
+                    <field name="color"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div
+                                    t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}}
+                                              oe_kanban_global_click_edit oe_semantic_html_override
+                                              oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                                <div class="oe_dropdown_kanban">
+                                    <!-- dropdown menu -->
+                                    <div class="oe_dropdown_toggle">
+                                        <i class="fa fa-bars fa-lg"/>
+                                        <ul class="oe_dropdown_menu">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                            <li>
+                                                <ul class="oe_kanban_colorpicker"
+                                                    data-field="color"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="oe_clear"></div>
+                                </div>
+                                <div t-attf-class="oe_kanban_content">
+                                    <!-- title -->
+                                    corrective:
+                                    <field name="ref_mnt_corr"/>
+                                    <br/>
+                                    Date de début:
+                                    <field name="date_from"/>
+                                    <br/>
+                                    Durée:
+                                    <field name="number_of_days"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="view_corrective_tree" model="ir.ui.view">
+            <field name="name">corrective.tree</field>
+            <field name="model">corrective</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="type maintenance">
+                    <field name="ref_mnt_corr" />
+                    <field name="equipment_id" />
+                    <field name="panne" />
+                    <field name="date_from" />
+                    <field name="responsable" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_corrective_form" model="ir.ui.view">
+            <field name="name">corrective.form</field>
+            <field name="model">corrective</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="type maintenance">
+                    <header>
+                        <button name="cloturer" type="object" string="Clôturer" class="oe_hightlight" attrs="{'invisible': [('state_end', '!=', False)]}"/>
+                        <button name="creer_bon_travail"
+                                type="object"
+                                string="Bon de travail"
+                                class="oe_hightlight"
+                                attrs="{'invisible': [('state_end', '!=', False)]}"/>
+
+                        <field name='state_end' invisible="True"/>
+                        <!-- clickable="True" -->
+                        <field name="state" widget="statusbar"
+                               options="{'fold_field': 'fold'}"/>
+                    </header>
+                    <sheet>
+                        <group colspan="4" col="4">
+                              <field name="ref_mnt_corr" />
+                              <field name="equipment_id" />
+                              <field name="panne" />
+                              <field name="date_from" />
+                              <field name="date_to"/>
+
+                        </group>
+                        <group string="Prolonger la garantie ?">
+                            <field name="arret" />
+                            <field name="number_of_days" attrs="{'readonly': [('arret', '=', False)]}"/>
+                        </group>
+                        <group>
+                        </group>
+                        <notebook>
+
+                             <page string="Equipes ">
+                            <field name="responsable" />
+
+
+                        </page>
+                            <page string="Causes de pannes">
+
+                                <field name="details_cause_panne" colspan="4" nolabel="1">
+                                    <tree string="causes de pannes" editable="bottom">
+
+                                        <field name="cause"/>
+                                        <field name="solution"/>
+
+                               </tree>
+
+                          </field>
+                       </page>
+                        </notebook>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_corrective_view">
+            <field name="name">corrective</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">corrective</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form,calendar</field>
+            <field name="view_id" ref="view_corrective_filter"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_corrective_view_form">
+            <field name="act_window_id" ref="act_open_corrective_view" />
+            <field name="sequence" eval="20" />
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_corrective_form" />
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_corrective_view_tree">
+            <field name="act_window_id" ref="act_open_corrective_view" />
+            <field name="sequence" eval="10" />
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_corrective_tree" />
+        </record>
+
+
+        <!-- Définir un formulaire pour les causes -->
+        <record id="view_cause_panne_form" model="ir.ui.view">
+            <field name="name">cause.passe.form</field>
+            <field name="model">cause_panne</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="type maintenance">
+                    <sheet>
+                        <group colspan="4" col="4">
+                              <field name="cause"/>
+                              <field name="solution"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

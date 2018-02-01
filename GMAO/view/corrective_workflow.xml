@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="wkf_corrective" model="workflow">
+            <field name="name">corrective.wkf</field>
+            <field name="osv">corrective</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record id="act_draft_cor" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_corrective"/>
+            <field name="flow_start">True</field>
+            <field name="name">wait</field>
+        </record>
+
+        <record id="act_progress_cor" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_corrective"/>
+            <field name="action">write({'state':'progress'})</field>
+			<field name="kind">function</field>
+            <field name="name">progress</field>
+        </record>
+
+        <record id="act_done_cor" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_corrective"/>
+            <field name="action">update_equipment()
+				write({'state':'done'})</field>
+			<field name="kind">function</field>
+            <field name="name">done</field>
+        </record>
+
+        <record id="tdp" model="workflow.transition">
+            <field name="act_from" ref="act_draft_cor"/>
+            <field name="act_to" ref="act_progress_cor"/>
+            <field name="signal">in_progress</field>
+        </record>
+
+        <record id="tdo" model="workflow.transition">
+            <field name="act_from" ref="act_progress_cor"/>
+            <field name="act_to" ref="act_done_cor"/>
+            <field name="signal">validate</field>
+        </record>
+    </data>
+</openerp>

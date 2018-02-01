@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_esay_desciption,access_esay_desciption,model_esay_desciption,,1,1,1,1
+access_esay_desciption_cgv,access_esay_desciption_cgv,model_esay_desciption_cgv,,1,1,1,1

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<template xml:space="preserve">
+    <t t-extend="KanbanView.buttons">
+        <t t-jquery="span.oe_alternative" t-operation="replace">
+            <span t-if="widget.is_action_enabled('group_create') and widget.dataset.model != 'preventive' and widget.dataset.model != 'corrective' and widget.dataset.model != 'intervention'"
+                  class="oe_alternative"
+                  style="display: none">
+                <span class="oe_fade">or</span>
+                <div class="oe_bounce_container">
+                    <a href="#" class="oe_bold oe_kanban_add_column">Add a new column</a>
+                </div>
+            </span>
+        </t>
+    </t>
+</template>

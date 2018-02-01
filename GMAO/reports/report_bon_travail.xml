@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_bon_travail">
+			<t t-call="report.html_container">
+				<t t-call="report.external_layout">
+					<t t-foreach="docs" t-as="o">
+						<div class="page">
+							<div class="oe_structure" />
+
+                                <div class="col-xs-12 text-center">
+							        <h3 class="text-center" style="font-weight:bold;">BON DE TRAVAIL</h3>
+							            <br /><p/>
+                                </div>
+                            <div class="col-xs-6" style="margin-top:15px;font-size:18px">
+
+
+                                <p> <strong>Réferance :</strong> <span t-field="o.name" /></p>
+                                <p> <strong>Date de la demande :</strong> <span t-field="o.date" /></p>
+
+                                </div>
+
+                                <div class="col-xs-6" style="margin-top:15px;font-size:18px ">
+                                <!--p> <strong>Referance de la demande :</strong> <span t-field="o.ref" /></p-->
+                                <p> <strong>Machine :</strong> <span t-field="o.equipment_id" /></p>
+                                <p> <strong>Priorité :</strong> <span t-field="o.priority" /></p>
+                            </div>
+                             <br></br>
+                                 <br></br>
+                                 <br></br>
+                             <br></br>
+                                 <br></br>
+                                 <br></br>
+                                
+                                <div>
+
+								 <table class="table table-condensed" style="font-size:15px">
+                        <thead>
+                            <tr>
+                                <th>Pieces</th>
+                                <th>Referance</th>
+                                <th>Quantity</th>
+                               
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                                 <br></br>
+                                 <br></br>
+							<h5 class="text-center" style="font-weight:bold;font-size:15px"> Pieces </h5>
+
+
+							<tr t-foreach='o.piece_ids' t-as='value'>
+                                    <td><span t-esc="value.piece_id.name"/></td>
+                                    <td><span t-esc="value.reference"/></td>
+                                    <td><span t-esc="value.qty"/></td>
+                                    
+
+                                </tr>
+                        </tbody>
+                    </table>
+                                  <table class="table table-condensed" style="font-size:15px">
+                        <thead>
+                            <tr>
+                                <th>Equipes</th>
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+							  <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+							<h5 class="text-center" style="font-weight:bold;font-size:15px"> Equipe de Techniciens </h5>
+
+                                 <br></br>
+                                 <br></br>
+
+							<tr t-foreach='o.responsable' t-as='value'>
+                                    <td><span t-esc="value.name"/></td>
+
+
+
+                                </tr>
+                        </tbody>
+                    </table>
+                     <div class="col-xs-12 text-right">
+                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.equipment_id, 200, 50)" style="width:200px;height:50px;"/>
+                                     </div>
+
+                                <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                <div class="col-xs-12 text-right">
+                                    <br /><br /><p/>
+                                    <strong> LE GESTIONNAIRE</strong>
+                                    </div>
+                                </div>
+
+						</div>
+					</t>
+				</t>
+
+			</t>
+		</template>
+	</data>
+</openerp>
+
+

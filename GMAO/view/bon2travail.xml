@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="bon_tree-view" model="ir.ui.view">
+            <field name="name">bon.tree</field>
+            <field name="model">bon</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Bon">
+                    <field name="name" readonly="1" />
+                    <field name="state" />
+                    <field name="user_id" />
+                    <field name="date" />
+                    <field name="priority" />
+                    <field name="equipment_id" />
+                    <field name="responsable" />
+                    <field name="active" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="bon-view" model="ir.ui.view">
+            <field name="name">bon.form</field>
+            <field name="model">bon</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Bon">
+                    <header>
+                		<button name="action_done" states="draft" string="Valider" type="object" icon="gtk-apply"/>
+		                <button name="action_cancel" states="done" string="Annuler" type="object"  icon="gtk-cancel"/>
+		                <button name="action_draft" states="cancel,done" string="Remettre en brouillon" type="object" icon="terp-stock_effects-object-colorize"/>
+                		<field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                    <group colspan="4" col="6">
+                        <group colspan="4" col="2">
+                            <separator string="Bon Description" colspan="4" />
+                            <field name="name" />
+                            <field name="date" />
+                            <field name="priority" />
+                        </group>
+                        <group colspan="1" col="2">
+                            <separator string="Bon state" colspan="2" />
+                            <field name="user_id" />
+                            <field name="active" />
+                        </group>
+                    </group>
+                    <separator colspan="4" string="References" />
+                    <group>
+                    <field name="ref" string="Reference"/>
+                        <field name="equipment_id" />
+
+                    </group>
+                    <newline />
+                    <notebook colspan="4">
+                        <page string="Equipes ">
+                            <field name="responsable" />
+
+
+                        </page>
+                        <page string="Piéces ">
+                            <field name="piece_ids" widget="one2many_tags">
+                                <tree editable="bottom">
+                                    <field name="piece_id" />
+                                    <field name="reference" />
+                                    <field name="qty" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+                	</div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="bon_act" model="ir.actions.act_window">
+            <field name="name">Bons de Travail</field>
+            <field name="res_model">bon</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="bon_tree-view" />
+        </record>
+
+
+
+        <record id="open_view_bon_new" model="ir.actions.act_window">
+            <field name="name">Bon de Travail</field>
+            <field name="res_model">bon</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+        
+        <menuitem id="menu_open_view_bon_list" 
+                  name="Bon de travail"
+                  parent="menu_gmao_sub"
+                  sequence="36"/>
+        <menuitem action="open_view_bon_new" 
+                  name="Bon de travail"
+                  id="menu_open_view_bon_new2" 
+                  parent="menu_open_view_bon_list" />
+        
+    </data>
+</openerp>

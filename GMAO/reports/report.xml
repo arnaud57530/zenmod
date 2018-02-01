@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="gmao_machine"
+            string="Informatione sur machine"
+            model="machine"
+            report_type="qweb-pdf"
+            file="GMAO.report_machine"
+            name="GMAO.report_machine"
+        />
+         <report
+            id="gmao_machine_notif"
+            string="Notification sur machine"
+            model="machine"
+            report_type="qweb-pdf"
+            file="GMAO.report_machine_notif"
+            name="GMAO.report_machine_notif"
+        />
+        <report
+            id="gmao_machine_corrective"
+            string="Informatione sur machine corrective"
+            model="machine"
+            report_type="qweb-pdf"
+            file="GMAO.report_machine_corrective"
+            name="GMAO.report_machine_corrective"
+        />
+
+        <report
+            id="gmao_machine_preventive"
+            string="Informatione sur machine preventive"
+            model="machine"
+            report_type="qweb-pdf"
+            file="GMAO.report_machine_preventive"
+            name="GMAO.report_machine_preventive"
+        />
+        <report
+            id="gmao_bon_travail"
+            string="Bon de Travail"
+            model="bon"
+            report_type="qweb-pdf"
+            file="GMAO.report_bon_travail"
+            name="GMAO.report_bon_travail"
+        />
+
+    </data>
+</openerp>

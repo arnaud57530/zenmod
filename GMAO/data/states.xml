@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+     <data noupdate="1">
+
+        <record id="is1" model="intervention.state">
+            <field name="name">Brouillon</field>
+            <field name="sequence">1</field>
+            <field name="case_default">True</field>
+        </record>
+
+         <record id="is2" model="intervention.state">
+            <field name="name">Active</field>
+            <field name="sequence">2</field>
+        </record>
+
+        <record id="is3" model="intervention.state">
+            <field name="name">En cours</field>
+            <field name="sequence">3</field>
+        </record>
+
+         <record id="is4" model="intervention.state">
+            <field name="name">Clôturée</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="cs1" model="preventive.state">
+            <field name="name">Machine Attente</field><!-- devis -->
+            <field name="sequence">1</field>
+            <field name="case_default">True</field>
+        </record>
+        <record id="cs1" model="corrective.state">
+            <field name="name">Machine Déclarer</field><!-- devis -->
+            <field name="sequence">1</field>
+            <field name="case_default">True</field>
+        </record>
+
+        <record id="cs2" model="corrective.state">
+            <field name="name">Diagnostic</field><!-- prise en charge de la panne -->
+            <field name="sequence">1</field>
+            <field name="case_default">True</field>
+        </record>
+
+         <record id="cs3" model="corrective.state">
+            <field name="name">Approbation Client</field>
+            <field name="sequence">2</field>
+        </record>
+
+        <record id="cs4" model="corrective.state">
+            <field name="name">En Réparation</field>
+            <field name="sequence">3</field>
+        </record>
+
+         <record id="cs5" model="corrective.state">
+            <field name="name">Attente de Pieces</field>
+            <field name="sequence">4</field>
+        </record>
+         <record id="cs6" model="corrective.state">
+            <field name="name">Réparer/essais</field>
+            <field name="sequence">5</field>
+        </record>
+        <record id="cs7" model="corrective.state">
+            <field name="name">Cloturer</field>
+            <field name="sequence">6</field>
+        </record>
+
+        <record id="cp1" model="preventive.state">
+            <field name="name">Machine Déclarer</field><!-- devis -->
+            <field name="sequence">1</field>
+            <field name="case_default">True</field>
+        </record>
+
+         <record id="cp2" model="preventive.state">
+            <field name="name">Envoi du devis au client</field><!-- devis -->
+            <field name="sequence">1</field>
+            <field name="case_default">True</field>
+        </record>
+
+         <record id="cp3" model="preventive.state">
+            <field name="name">acceptation du devis par le client</field><!-- bon de commandes -->
+            <field name="sequence">2</field>
+        </record>
+
+        <record id="cp4" model="preventive.state">
+            <field name="name">Preparation interne</field>
+            <field name="sequence">3</field>
+        </record>
+
+         <record id="cp5" model="preventive.state">
+            <field name="name">Déplacement pour réparation</field>
+            <field name="sequence">4</field>
+        </record>
+        <record id="cp6" model="preventive.state">
+            <field name="name">Cloturer</field>
+            <field name="sequence">6</field>
+        </record>
+
+    </data>
+</openerp>

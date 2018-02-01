@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_machine_preventive">
+			<t t-call="report.html_container">
+				<t t-call="report.external_layout">
+					<t t-foreach="docs" t-as="o">
+						<div class="page">
+							<div class="oe_structure" />
+
+                                <div class="col-xs-12 text-center">
+							        <h3 class="text-center" style="font-weight:bold;">Infos sur Machine -Préventive</h3>
+							            <br /><p/>
+                                </div>
+                            <div class="col-xs-6" style="margin-top:15px;font-size:15px">
+
+
+                                <p> <strong>Machine :</strong> <span t-field="o.name" /></p>
+                                <p> <strong>date de mise en service :</strong> <span t-field="o.date_ser" /></p>
+                                <p> <strong>date Livraison :</strong> <span t-field="o.date_liv" /></p>
+                                <p> <strong>date fin de garantie :</strong> <span t-field="o.date_gar" /></p>
+                                <p> <strong>Jours de prolongation :</strong> <span t-field="o.days_of_overtime" /></p>
+                            </div>
+                                <div class="col-xs-6" style="margin-top:15px;font-size:15px">
+                                <p> <strong>N° de Série  groupe :</strong> <span t-field="o.num_serie_un" /></p>
+                                <p> <strong>N° de série du moteur :</strong> <span t-field="o.num_serie_deux" /></p>
+                                <p> <strong>N° de série de l'altérnateur :</strong> <span t-field="o.num_serie_trois" /></p>
+                                <p> <strong>Puissance/Kw :</strong> <span t-field="o.puissance" /></p>
+                                <p> <strong>Site :</strong> <span t-field="o.site" /></p>  <br></br>
+                                </div>
+                                <div>
+
+								 <table class="table table-condensed" style="font-size:11px">
+                        <thead>
+                            <tr>
+                                <th>Ref PM</th>
+                                <th>Commencé le</th>
+                                <th>Prochaine date</th>
+                                <th>Date d'alerte</th>
+                                <th>Jours restants</th>
+                                <th>Etats</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+							  <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+							<h4 class="text-center" style="font-weight:bold;"> Maintenance preventive </h4>
+							  <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+
+							<tr t-foreach='o.pm_ids' t-as='value'>
+                                    <td><span t-esc="value.name"/></td>
+                                    <td><span t-esc="value.days_last_done"/></td>
+                                    <td><span t-esc="value.days_next_due"/></td>
+                                    <td><span t-esc="value.days_warn_period"/></td>
+									<td><span t-esc="value.days_left"/></td>
+                                    <td><span t-esc="value.state.name"/></td>
+
+                                </tr>
+                        </tbody>
+                    </table>
+                                     <div class="col-xs-12 text-right">
+                                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 200, 50)" style="width:200px;height:50px;"/>
+                                     </div>
+
+                                <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                <div class="col-xs-12 text-right">
+                                    <br /><br /><p/>
+                                    <strong> LE GESTIONNAIRE</strong>
+                                    </div>
+                                </div>
+
+						</div>
+					</t>
+				</t>
+
+			</t>
+		</template>
+	</data>
+</openerp>
+
+

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_preventive_filter" model="ir.ui.view">
+            <field name="name">preventive.select</field>
+            <field name="model">preventive</field>
+            <field name="arch" type="xml">
+                <search string="Chercher ...">
+                    <filter name="old" string="Dépassés" domain="[('state','=','Dépassé')]"
+                            help="Maintenaces preventives en attente"/>
+                    <filter name="progress" string="Approché" domain="[('state','=','Approché')]"
+                            help="Maintenances preventives en cours de traitement"/>
+                    <filter name="done" string="Terminée" domain="[('state','=','OK')]"
+                            help="Maintenances preventives traitées"/>
+                    <separator/>
+                    <filter string="MP périodique" domain="[('recurrent','=', True)]" icon="terp-personal"/>
+                    <filter string="MP non périodique" domain="[('recurrent','=', False)]" icon="terp-personal"/>
+                    <group expand="0" string="Regrouper par">
+                        <filter string="Machine" icon="terp-personal" context="{'group_by': 'equipment_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="preventive_calendar">
+            <field name="name">Calendrier des mantenances preventives</field>
+            <field name="model">preventive</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar string="Maintenances preventive"
+                          date_start="days_last_done" date_stop="days_next_due" color="user_id">
+                    <field name="equipment_id"/>
+                    <field name="days_left"/>
+                </calendar>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_preventive_kanban">
+            <field name="name">preventive.kanban</field>
+            <field name="model">preventive</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state">
+                    <field name="color"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div
+                                    t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}}
+                                              oe_kanban_global_click_edit oe_semantic_html_override
+                                              oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                                <div class="oe_dropdown_kanban">
+                                    <!-- dropdown menu -->
+                                    <div class="oe_dropdown_toggle">
+                                        <i class="fa fa-bars fa-lg"/>
+                                        <ul class="oe_dropdown_menu">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                            <li>
+                                                <ul class="oe_kanban_colorpicker"
+                                                    data-field="color"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="oe_clear"></div>
+                                </div>
+                                <div t-attf-class="oe_kanban_content">
+                                    <!-- title -->
+                                    preventive:
+                                    <field name="name"/>
+                                    <br/>
+                                    Date de début:
+                                    <field name="days_next_due"/>
+                                    <br/>
+                                    Durée:
+                                    <field name="days_left"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!--
+   ==========
+        PM 
+        ==========
+        -->
+
+        <record id="view_pm_form" model="ir.ui.view">
+            <field name="name">preventive.form</field>
+            <field name="model">preventive</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Properties" version="7.0">
+                    <header>
+                        <button name="cloturer" type="object" string="Clôturer" class="oe_hightlight"
+                                attrs="{'invisible': [('state_end', '!=', False)]}"/>
+                        <button name="creer_bon_travail"
+                                type="object"
+                                string="Bon de travail"
+                                class="oe_hightlight"
+                                attrs="{'invisible': [('state_end', '!=', False)]}"/>
+                        <field name='state_end' invisible="True"/>
+                        <!-- clickable="True" -->
+                        <field name="state" widget="statusbar"
+                               options="{'fold_field': 'fold'}"/>
+                    </header>
+                    <sheet>
+                        <group col="4" colspan="1">
+                            <field name="name" colspan="2"/>
+                            <field name="equipment_id"/>
+                            <field name="meter" invisible="True"/>
+                            <field name="recurrent"/>
+                            <!--field name="cadence" invisible="1"/-->
+
+                        </group>
+                        <group col="4" colspan="4">
+                            <separator string="MP parameters " colspan="4"/>
+                            <field name="days_last_done"/>
+                            <field name="hours_interval"/>
+                            <field name="days_next_due"/>
+                            <field name="rate_of_use"/>
+                            <field name="days_warn_period"/>
+                            <field name="days_interval"/>
+                            <field name="days_left"/>
+                        </group>
+                        <field name="classification" class="oe_inline"
+                               placeholder="Classification de l'preventive (non-conformité d’équipement ou d’installation, remplacement dans le cadre de la garantie)..."/>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+        <record id="view_pm_tree" model="ir.ui.view">
+            <field name="name">preventive.tree</field>
+            <field name="model">preventive</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Properties"
+                      colors="blue:days_left&lt;=days_warn_period and days_left&gt;0;red:days_left&lt;=0;">
+                    <field name="name" select="1"/>
+                    <field name="equipment_id" colspan="2" select="1"/>
+                    <field name="days_last_done" select="2"/>
+                    <field name="days_next_due" select="2"/>
+                    <field name="days_warn_period" select="2"/>
+                    <field name="days_left" select="2"/>
+                    <field name="state" select="2"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- calendar -->
+
+        <record model="ir.ui.view" id="cmms_pm_calendar">
+            <field name="name">preventive.calendar</field>
+            <field name="model">preventive</field>
+            <field name="type">calendar</field>
+            <field name="arch" type="xml">
+                <calendar string="PM" date_start="days_last_done" color="user_id">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="open_view_pm_new" model="ir.actions.act_window">
+            <field name="name">Preventive maintenance</field>
+            <field name="res_model">preventive</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form,calendar</field>
+            <field name="view_id" ref="view_preventive_filter"/>
+        </record>
+
+
+        <!-- Clôturer une intervention -->
+        <record id="pm_close_wizard_view" model="ir.ui.view">
+            <field name="name">Clôture</field>
+            <field name="model">pm.close.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="user_id"/>
+                        <field name="date"/>
+                        <field name="pm_id" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="proceed" string="Clôturer" type="object" class="oe_highlight"/>
+                        ou
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

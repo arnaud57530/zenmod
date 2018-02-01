@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="0">
+
+    <record model="ir.module.category" id="module_category_gmao">
+        <field name="name">GMAO</field>
+        <field name="visible" eval="0" />
+    </record>
+
+    <record id="group_gmao_admin" model="res.groups">
+        <field name="name">Responsable</field>
+        <field name="category_id" ref="module_category_gmao"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_gmao_user" model="res.groups">
+        <field name="name">Utilisateur</field>
+        <field name="category_id" ref="module_category_gmao"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_gmao_viewer" model="res.groups">
+        <field name="name">Utilisateur (lecture)</field>
+        <field name="category_id" ref="module_category_gmao"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+</data>
+</openerp>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<menuitem id="menu_gmao"
+                  name="GMAO"
+
+                  parent="base.menu_reporting"
+                  sequence="3"/>
+
+        <record id="intervention_graph" model="ir.ui.view">
+            <field name="name">intervention</field>
+            <field name="model">machine</field>
+            <field name="arch" type="xml">
+                <graph string="Nombre d'interventions" type="pivot">
+                     <field name="puissance" type="row"/>
+                     <field name="local" type="col"/>
+
+                 </graph>
+             </field>
+        </record>
+
+		<record model="ir.actions.act_window" id="action_intervention" >
+			<field name="name">Puissance </field>
+			<field name="type">ir.actions.act_window</field>
+            <field name="res_model">machine</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">graph</field>
+			<field name="view_id" ref='intervention_graph'/>
+		</record>
+
+ 		<menuitem name="Total Puissance "
+                  id="im"
+                  parent="menu_gmao"
+                  sequence="4"
+                  action="action_intervention"/>
+
+        <record id="intervention_graph_local" model="ir.ui.view">
+            <field name="name">intervention</field>
+            <field name="model">machine</field>
+            <field name="arch" type="xml">
+                <graph string="Nombre d'interventions" type="pivot">
+                     <field name="name" type="row"/>
+                     <field name="local" type="col"/>
+                    <field name="intervention_count" operator="+"/>
+                 </graph>
+             </field>
+        </record>
+
+		<record model="ir.actions.act_window" id="action_intervention_local" >
+			<field name="name">Nombre d'interventions</field>
+			<field name="type">ir.actions.act_window</field>
+            <field name="res_model">machine</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">graph</field>
+			<field name="view_id" ref='intervention_graph_local'/>
+		</record>
+
+ 		<menuitem name="Interventions par machine"
+                  id="im2"
+                  parent="menu_gmao"
+                  sequence="5"
+                  action="action_intervention_local"/>
+    </data>
+</openerp>

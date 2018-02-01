@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+  	    <record model="ir.actions.act_window" id="action_all_tax">
+            <field name="name">All Tax</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zenawtol.report.alltax</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_tax_return">
+            <field name="name">Tax Return</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zenawtol.report.tax_return</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_tax_return_by_account">
+            <field name="name">Tax Return By account</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zenawtol.report.tax_return.by.account</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_base_return">
+            <field name="name">Base Return</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zenawtol.report.base_return</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+	      
+    
+        <menuitem
+	        sequence="100"
+	        parent="base.menu_reporting_dashboard"
+	        id="menu_action_all_tax"
+	        action="action_all_tax"/>
+        
+        <menuitem
+	        sequence="110"
+	        parent="base.menu_reporting_dashboard"
+	        id="menu_action_tax_return"
+	        action="action_tax_return"/>
+	        
+	    <menuitem
+	        sequence="115"
+	        parent="base.menu_reporting_dashboard"
+	        id="menu_action_tax_return_by_account"
+	        action="action_tax_return_by_account"/>
+        
+        <menuitem
+	        sequence="120"
+	        parent="base.menu_reporting_dashboard"
+	        id="menu_action_base_return"
+	        action="action_base_return"/>
+	        
+	        
+
+        <record id="view_report_alltax_tree" model="ir.ui.view">
+            <field name="name">zenawtol.report.alltax.tree</field>
+            <field name="model">zenawtol.report.alltax</field>
+            <field name="arch" type="xml">
+                <tree string="Description">
+                    <field name="name"/>
+        			<field name="mydate"/>
+        			<field name="journal_entry"/>
+        			<field name="partner_name"/>
+        			<field name="partner_vat"/>
+        			<field name="account_code"/>
+        			<field name="account_name"/>
+        			<field name="mycredit"/>
+        			<field name="mydebit"/>
+        			<field name="sumcredit"/>
+        			<field name="sumdebit"/>
+        		</tree>
+        	</field>
+        </record>
+        <record id="view_report_base_return_tree" model="ir.ui.view">
+            <field name="name">zenawtol.report.base_return.tree</field>
+            <field name="model">zenawtol.report.base_return</field>
+            <field name="arch" type="xml">
+                <tree string="Description">
+                    <field name="name"/>
+        			<field name="mydate"/>
+        			<field name="journal_entry"/>
+        			<field name="partner_name"/>
+        			<field name="partner_vat"/>
+        			<field name="account_code"/>
+        			<field name="account_name"/>
+        			<field name="mycredit"/>
+        			<field name="mydebit"/>
+        			<field name="sumcredit"/>
+        			<field name="sumdebit"/>
+        		</tree>
+        	</field>
+        </record>
+        <record id="view_report_tax_return_tree" model="ir.ui.view">
+            <field name="name">zenawtol.report.tax_return.tree</field>
+            <field name="model">zenawtol.report.tax_return</field>
+            <field name="arch" type="xml">
+                <tree string="Description">
+                    <field name="name"/>
+        			<field name="mydate"/>
+        			<field name="journal_entry"/>
+        			<field name="partner_name"/>
+        			<field name="partner_vat"/>
+        			<field name="account_code"/>
+        			<field name="account_name"/>
+        			<field name="mycredit"/>
+        			<field name="mydebit"/>
+        			<field name="sumcredit"/>
+        			<field name="sumdebit"/>
+        		</tree>
+        	</field>
+        </record>
+    
+        <record id="view_report_tax_return_by_account_tree" model="ir.ui.view">
+            <field name="name">zenawtol.report.tax_return.by.account.tree</field>
+            <field name="model">zenawtol.report.tax_return.by.account</field>
+            <field name="arch" type="xml">
+                <tree string="Description">
+                    <field name="name"/>
+        			<field name="mydate"/>
+        			<field name="journal_entry"/>
+        			<field name="partner_name"/>
+        			<field name="partner_vat"/>
+        			<field name="account_code"/>
+        			<field name="account_name"/>
+        			<field name="mycredit"/>
+        			<field name="mydebit"/>
+        			<field name="sumcredit"/>
+        			<field name="sumdebit"/>
+        		</tree>
+        	</field>
+        </record>
+    
+    
+    
+    
+    
+    <report
+	    id="report_allawtol_taxes"
+	    model="zenawtol.report.alltax"
+	    string="All Awtol Taxes"
+	    report_type="qweb-pdf"
+	    name="zenawtol.report_alltaxes"
+	    file="All VAT Report"
+    />
+    
+    <report
+	    id="report_awtol_tax_return"
+	    model="zenawtol.report.tax_return"
+	    string="Tax return"
+	    report_type="qweb-pdf"
+	    name="zenawtol.report_alltaxes"
+	    file="Tax Return"
+    />
+    
+    <report
+	    id="report_awtol_tax_return_by_account"
+	    model="zenawtol.report.tax_return.by.account"
+	    string="Tax return"
+	    report_type="qweb-pdf"
+	    name="zenawtol.report_alltaxes_by_account"
+	    file="Tax Return"
+    />
+    
+    <report
+	    id="report_awtol_base_return"
+	    model="zenawtol.report.base_return"
+	    string="Base Return"
+	    report_type="qweb-pdf"
+	    name="zenawtol.report_alltaxes"
+	    file="Base Return"
+    />
+    
+    
+    <template id="report_alltaxes_by_account">
+	    <t t-call="report.html_container"> 
+        <div class="page">
+		<h2>Rapport des Taxes</h2>
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+				<td>VAT code</td>
+				<td>Invoice Date</td>
+				<td>Journal entry</td>
+				<td>Supplier Customer</td>
+				<td>VAT ID</td>
+				<td>GL Account</td>
+				<td>GL account name</td>
+				<td>Credit</td>
+				<td>Debit</td>
+				</tr>
+			</thead>
+			<t t-set="code_account" t-value="docs[0].account_code"/>
+			<t t-set="name_account" t-value="docs[0].account_name"/>
+			<t t-set="code_account_parent" t-value="docs[0].code_account_parent"/>
+			<t t-set="name_account_parent" t-value="docs[0].name_account_parent"/>
+			<t t-set="sumdeb" t-value="docs[0].sumdebit"/>
+			<t t-set="sumcre" t-value="docs[0].sumcredit"/>
+			<t t-set="sumdeb_tot" t-value="0"/>
+			<t t-set="sumcre_tot" t-value="0"/>
+			<t t-set="sumdeb1" t-value="0"/>
+			<t t-set="sumcre1" t-value="0"/>
+			
+			<tbody class="invoice_body">
+	        	<p t-foreach="docs" t-as="o">
+	        		<t t-set="sumdeb_tot" t-value="sumdeb_tot+o.mydebit"/>
+					<t t-set="sumcre_tot" t-value="sumcre_tot+o.mycredit"/>
+	        		
+
+	        		
+	        		
+	        		<t t-set="changed" t-value="code_account!=o.account_code"/>
+					<t t-if="changed">
+						
+						<tr>
+							<td></td>
+							<td></td>
+							<td colspan="4"><b><span t-esc="code_account"/>-<span t-esc="name_account"/></b></td>
+							<td><b>Total</b></td>
+							<td><b><span t-esc="'{0:,.2f}'.format(sumcre)"/></b></td>
+							<td><b><span t-esc="'{0:,.2f}'.format(sumdeb)"/></b></td>
+						</tr>
+						<t t-set="sumdeb" t-value="o.sumdebit"/>
+						<t t-set="sumcre" t-value="o.sumcredit"/>
+						<t t-set="code_account" t-value="o.account_code"/>
+						<t t-set="name_account" t-value="o.account_name"/>
+					</t>
+					
+					
+				    <t t-set="changed1" t-value="code_account_parent!=o.code_account_parent"/>
+	        		<t t-if="changed1">
+	        			<tr>
+							<td></td>
+							<td></td>
+							<td colspan="4"><h4><span t-esc="code_account_parent"/>-<span t-esc="name_account_parent"/></h4></td>
+							<td><h4>Total</h4></td>
+							<td><h4><span t-esc="'{0:,.2f}'.format(sumcre1)"/></h4></td>
+							<td><h4><span t-esc="'{0:,.2f}'.format(sumdeb1)"/></h4></td>
+						</tr>
+						<t t-set="sumdeb1" t-value="0"/>
+						<t t-set="sumcre1" t-value="0"/>
+						<t t-set="code_account_parent" t-value="o.code_account_parent"/>
+						<t t-set="name_account_parent" t-value="o.name_account_parent"/>
+	        		
+	        		</t>
+	        		
+	        		<t t-set="sumdeb1" t-value="o.mydebit+sumdeb1"/>
+					<t t-set="sumcre1" t-value="o.mycredit+sumcre1"/>
+					
+					<t t-set="a" t-value="o.mydebit"/>
+					<t t-set="b" t-value="o.mycredit"/>
+	        		<tr>
+	        			<td><span t-field="o.name"/></td>
+						<td><span t-field="o.mydate"/></td>
+						<td><span t-field="o.journal_entry"/></td>
+						<td><span t-field="o.partner_name"/></td>
+						<td><span t-field="o.partner_vat"/></td>
+						<td><span t-field="o.account_code"/></td>
+						<td><span t-field="o.account_name"/></td>
+						<td><span t-esc="'{0:,.2f}'.format(b)"/></td>
+						<td><span t-esc="'{0:,.2f}'.format(a)"/></td>
+					</tr>
+				</p>
+				<tr>
+					<td></td>
+					<td></td>
+					<td colspan="4"><b><span t-esc="code_account"/>-<span t-esc="name_account"/></b></td>
+					<td><b>Total</b></td>
+					<td><b><span t-esc="'{0:,.2f}'.format(sumcre)"/></b></td>
+					<td><b><span t-esc="'{0:,.2f}'.format(sumdeb)"/></b></td>
+				</tr>
+				<tr>
+							<td></td>
+							<td></td>
+							<td colspan="4"><h4><span t-esc="code_account_parent"/>-<span t-esc="name_account_parent"/></h4></td>
+							<td><h4>Total</h4></td>
+							<td><h4><span t-esc="'{0:,.2f}'.format(sumcre1)"/></h4></td>
+							<td><h4><span t-esc="'{0:,.2f}'.format(sumdeb1)"/></h4></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="4"><h3>TOTAL</h3></td>
+					<td><h3><span t-esc="'{0:,.2f}'.format(sumcre_tot)"/></h3></td>
+					<td><h3><span t-esc="'{0:,.2f}'.format(sumdeb_tot)"/></h3></td>
+				</tr>
+				
+			</tbody>
+		</table>  
+	    </div>
+	    </t>
+	</template>
+    
+    <template id="report_alltaxes">
+	    <t t-call="report.html_container"> 
+        <div class="page">
+		<h2>Rapport des Taxes</h2>
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+				<td>VAT code</td>
+				<td>Invoice Date</td>
+				<td>Journal entry</td>
+				<td>Supplier Customer</td>
+				<td>VAT ID</td>
+				<td>GL Account</td>
+				<td>GL account name</td>
+				<td>Credit</td>
+				<td>Debit</td>
+				</tr>
+			</thead>
+			<t t-set="code_tax" t-value="docs[0].name"/>
+			<t t-set="sumdeb" t-value="docs[0].sumdebit"/>
+			<t t-set="sumcre" t-value="docs[0].sumcredit"/>
+			<t t-set="sumdeb_tot" t-value="0"/>
+			<t t-set="sumcre_tot" t-value="0"/>
+			<tbody class="invoice_body">
+	        	<p t-foreach="docs" t-as="o">
+	        		<t t-set="sumdeb_tot" t-value="sumdeb_tot+o.mydebit"/>
+					<t t-set="sumcre_tot" t-value="sumcre_tot+o.mycredit"/>
+			
+	        		
+	        		<t t-set="changed" t-value="code_tax!=o.name"/>
+					<t t-if="changed">
+						
+						<tr>
+							<td></td>
+							<td></td>
+							<td colspan="4"><b><span t-esc="code_tax"/></b></td>
+							<td><b>Total</b></td>
+							<td><b><span t-esc="'{0:,.2f}'.format(int(sumcre))"/></b></td>
+							<td><b><span t-esc="'{0:,.2f}'.format(int(sumdeb))"/></b></td>
+						</tr>
+						<t t-set="sumdeb" t-value="o.sumdebit"/>
+						<t t-set="sumcre" t-value="o.sumcredit"/>
+						<t t-set="code_tax" t-value="o.name"/>
+					</t>
+	        		<tr>
+	        			<td><span t-field="o.name"/></td>
+						<td><span t-field="o.mydate"/></td>
+						<td><span t-field="o.journal_entry"/></td>
+						<td><span t-field="o.partner_name"/></td>
+						<td><span t-field="o.partner_vat"/></td>
+						<td><span t-field="o.account_code"/></td>
+						<td><span t-field="o.account_name"/></td>
+						<td><span t-field="o.mycredit"/></td>
+						<td><span t-field="o.mydebit"/></td>
+					</tr>
+				</p>
+				<tr>
+					<td></td>
+					<td></td>
+					<td colspan="4"><b><span t-esc="code_tax"/></b></td>
+					<td><b>Total</b></td>
+					<td><b><span t-esc="'{0:,.2f}'.format(int(sumcre))"/></b></td>
+					<td><b><span t-esc="'{0:,.2f}'.format(int(sumdeb))"/></b></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td colspan="4"><b>TOTAL</b></td>
+					<td><b><span t-esc="'{0:,.2f}'.format(int(sumcre_tot))"/></b></td>
+					<td><b><span t-esc="'{0:,.2f}'.format(int(sumdeb_tot))"/></b></td>
+				</tr>
+				
+			</tbody>
+		</table>  
+	    </div>
+	    </t>
+	</template>
+</data>
+</openerp>
+

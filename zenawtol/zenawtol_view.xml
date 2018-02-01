@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+    
+    
+
+ 
+          <record id="view_zen_res_parner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='parent_id']" position = "after">
+            		<field name="trigram" placeholder="Trigram"/>
+            	</xpath>
+            </field>
+      </record>
+    
+    	<record id="view_zen_histo_form" model="ir.ui.view">
+            <field name="name">zen.histo.form</field>
+            <field name="model">zen.histo</field>
+            <field name="arch" type="xml">
+                <form string="Description">
+                  <group>
+                    <field name="zen_version"/>
+        			<field name="zen_initiateur_modifications"/>
+        			<field name="zen_modifications"/>
+    				<field name="zen_date"/>
+    				<field name="zen_auteurs"/>
+        		  </group>
+        		</form>
+        	</field>
+        </record>
+
+
+    	<record id="view_zen_sale_implicationzen_form" model="ir.ui.view">
+            <field name="name">zen.sale.implication.form</field>
+            <field name="model">zen.sale.implication</field>
+            <field name="arch" type="xml">
+                <form string="Description">
+                  <group>
+                    <field name="zen_parner_id"/>
+        			<field name="zen_fonction"/>
+        			<field name="zen_mail"/>
+        			<field name="zen_gsm"/>
+    				<field name="zen_trigramme"/>
+    				<field name="zen_societe"/>
+    				<field name="is_supplier"/>
+        		  </group>
+        		</form>
+        	</field>
+        </record>
+    
+    
+    <record id="view_zen_order_model_form" model="ir.ui.view">
+            <field name="name">zen.order.model4.form</field>
+            <field name="model">zen.order.model4</field>
+            <field name="arch" type="xml">
+                <form string="Description">
+                  <group>
+                    <field name="name"/>
+        			<field name="chapter_ids"/>
+        		  </group>
+        		</form>
+        	</field>
+        </record>
+	
+
+	<record id="view_zen_model_chapter_form" model="ir.ui.view">
+            <field name="name">zen.model.chapter.form</field>
+            <field name="model">zen.model.chapter</field>
+            <field name="arch" type="xml">
+                <form string="Description">
+                  <group>
+                    <field name="name"/>
+        			<field name="zen_model_title"/>
+        			<field name="zen_content"/>
+    				<field name="zen_tags"/>
+    				<field name="zen_sequence"/>
+        		  </group>
+        		</form>
+        	</field>
+        </record>
+	
+	
+	<record id="view_zen_chapter_form" model="ir.ui.view">
+            <field name="name">zen.chapter.form</field>
+            <field name="model">zen.chapter</field>
+            <field name="arch" type="xml">
+                <form string="Description">
+                  <group>
+                    <field name="zen_model_chapter"/>
+                    <field name="name"/>
+        			<field name="zen_number"/>
+        			<field name="zen_content"/>
+    				<field name="zen_tags"/>
+    				<field name="display_order"/>
+    				<field name="display_contract"/>
+        		  </group>
+        		</form>
+        	</field>
+        </record>
+    
+    
+
+      
+      
+      <record id="view_zen_res_parner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='parent_id']" position = "after">
+            		<field name="trigram" placeholder="Trigram"/>
+            	</xpath>
+            </field>
+      </record>
+            	
+      <record id="view_zen_devis_form" model="ir.ui.view">
+            <field name="name">sale.order.form.zens</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+            
+            
+            	<xpath expr="//field[@name='partner_id']" position = "replace">
+            	</xpath>
+            	
+            	
+            	<xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="before">
+            		<field name="identifier"/>
+            	</xpath>
+            	
+            	<xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="before">
+            		<field name="identifier"/>
+            	</xpath>
+            	            	
+            	<xpath expr="//field[@name='date_order']" position = "replace">
+            	</xpath>
+            	
+            	<xpath expr="//field[@name='client_order_ref']" position = "replace">
+            	</xpath>
+            	            	
+            	<xpath expr="//field[@name='project_id']" position = "replace">
+            	</xpath>
+            	            	
+            	<xpath expr="//field[@name='user_id']" position = "replace">
+            	</xpath>
+            	
+            	
+            
+	           	<xpath expr="//page[@string='Order Lines']" position = "before">
+	           	  <page string = "test arg">
+	           	  	<group string = "Page 1">
+	           	  	  <field name="zen_model_order"/>
+	           	  	  <field name="zen_document_type"/>
+	           	  	  <field name="partner_id" on_change="onchange_partner_id(partner_id, context)" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options="{&quot;always_reload&quot;: True}"/>
+		           	  <field name="date_order"/>
+		           	  <field name="zen_object"/>
+					  <field name="client_order_ref"/>
+		           	  <field name="zen_presentation"/>
+		           	</group>
+		           	<group string = "Page 2">
+		           	  	<field name="project_id"/>
+		           	  	<field name="user_id"/>
+		           	  	<field name="zen_mail"/>
+    					<field name="zen_gsm"/>
+    					<field name="zen_ref"/>
+    					<field name="zen_validation"/>
+    					<field name="zen_doc_ref"/>
+    					<field name="zen_annexes"/>
+    					<field name="zen_resume"/>
+    					<field name="zen_histo">
+    						<tree>
+		    					<field name="zen_version"/>
+				           	  	<field name="zen_initiateur_modifications"/>
+		    					<field name="zen_modifications"/>
+		    					<field name="zen_date"/>
+		    					<field name="zen_auteurs"/>
+		    				</tree>
+    					</field>
+    					<field name="zen_implications">
+    				  		<tree>
+    				  			<field name="zen_parner_id"/>
+    				  			<field name="zen_fonction"/>
+    				  			<field name="zen_gsm"/>
+    				  			<field name="zen_trigramme"/>
+    				  			<field name="zen_societe"/>
+    				  		</tree>
+    				  	</field>
+    				  </group>
+    				  <group string ='Page 3'>
+    				    <field name="zen_table_matiere"/>
+
+    				  </group>		           	  
+		           	  <group string = 'Content'>
+		           	  	<field name = 'zen_contents'>
+		           	  		<tree>
+		           	  			<field name="name"/>
+    				  			<field name="zen_number"/>
+    				  			<field name="zen_content"/>
+    				  			<field name="zen_model_chapter"/>
+    				  			<field name="zen_tags"/>
+    				  			
+		           	  		</tree>
+		           	  	</field>
+		           	  </group>
+		           </page>
+	           	</xpath>
+            </field>
+        </record>
+
+
+       
+
+    
+    <report
+    	id="zenawtol_sales_report"
+	    model="sale.order"
+	    string="Awtol Sales Order"
+	    report_type="qweb-pdf"
+	    name="zenawtol.sale_order_with_header"
+	    file="Awtol Order"
+    />
+    
+    <template id="zenawtol.sale_order">
+    	<div class="page">
+    	<h2>Page 1</h2>
+		
+		<p style="page-break-before:always;"> </p> 
+		<h2>Page 2</h2>
+    	</div>
+	</template>
+    
+    
+    <template id="sale_order_with_header">
+    	<t t-call="zenawtol.sale_order_header"/>
+    	<div class="page">
+    		<t t-call="zenawtol.sale_order_page1"/>
+    		<t t-call="zenawtol.sale_order_page2"/>
+    		<t t-call="zenawtol.sale_order_page_tablematiere"/>
+    		<t t-call="zenawtol.sale_order_page_personne_impliquee"/>
+  			<t t-call="zenawtol.sale_order_page3"/>
+			 
+			
+    	</div>
+    </template>
+    
+    
+       <template id="sale_order_page_personne_impliquee">
+    		<h3>2 - Personnes impliquées dans le projet</h3>
+    		   <h4>Client</h4>
+    		   <table width="100%">
+    		   		<tr><td width="20%">Nom</td><td width="20%">Societe</td><td>Fonction</td><td>GSM</td></tr>
+    				<p t-foreach="docs[0].zen_implications" t-as="o">
+	    				 <t t-if="not(o.is_supplier)">
+				    		<tr><td width="20%" style="border: 1px solid black" colspan="2"><span t-field="o.zen_parner_id.name"/><br/>Mail : <span t-field="o.zen_mail"/></td><td width="20%" style="border: 1px solid black" colspan="2"><span t-field="o.zen_societe.name"/></td><td style="border: 1px solid black" colspan="2"><span t-field="o.zen_fonction"/></td><td style="border: 1px solid black" colspan="2"><span t-field="o.zen_gsm"/></td></tr>
+				    	 </t>
+				    </p>
+	    	  	</table>
+	    	  	<br/>
+	    	  	<h4>Fournisseur</h4>
+    		    <table width="100%">
+    		   		<tr><td width="20%">Nom</td><td width="20%">Societe</td><td>Fonction</td><td>GSM</td></tr>
+    				<p t-foreach="docs[0].zen_implications" t-as="o">
+	    				 <t t-if="o.is_supplier">
+				    		<tr><td width="20%" style="border: 1px solid black" colspan="2"><span t-field="o.zen_parner_id.name"/><br/>Mail : <span t-field="o.zen_mail"/></td><td width="20%" style="border: 1px solid black" colspan="2"><span t-field="o.zen_societe.name"/></td><td style="border: 1px solid black" colspan="2"><span t-field="o.zen_fonction"/></td><td style="border: 1px solid black" colspan="2"><span t-field="o.zen_gsm"/></td></tr>
+				    	 </t>
+				    </p>
+	    	  	 </table>	
+    		<p style="page-break-before:always;"> </p> 
+    </template>
+    
+    <template id="subtotal_template">
+    <!-- Subtotal -->
+    <t t-if="'subtotal' in p['category'] and p['category'].subtotal is True">
+        <tr class="text-right">
+            <td colspan="100">
+                <strong>Subtotal: </strong>
+                <span t-esc="p['subtotal']"/>
+            </td>
+        </tr>
+    </t>
+   </template>
+   
+   <template id="sale_order_display_contract">
+   		<table width="100%">
+   			<tr>
+   				<td style="border: 1px solid black;text-align:center;background-color:orange;" colspan="4">Client's invoicing data</td>
+   			</tr>
+   			<tr>
+   				<td style="border: 1px solid black" colspan="2" rowspan="2">RFP, RFI or quote request<br/>ref.nr.:<br/>or other reference</td>
+   				<td  style="border: 1px solid black" colspan="2"><span t-field="docs[0].client_order_ref"/></td>
+   			</tr>
+   			<tr>
+   				<td style="border: 1px solid black"></td>
+   			</tr>
+   			<tr>
+   				<td style="border: 1px solid black" colspan="2">Proposal Price</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].amount_total"/>€</td>
+   			</tr>
+   			<tr><td style="border: 1px solid black" colspan="4">-</td></tr>
+   			<tr><td style="border: 1px solid black" colspan="4">Responsible contact person</td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Name:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.name"/></td></tr>
+   			<tr>
+   				<td style="border: 1px solid black" colspan="4"></td>
+   			</tr>
+   			<tr><td style="border: 1px solid black" width="20%">For the Client:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.parent_id.name"/></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Street 1 nr.:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.street"/></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Zipcode, city:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.zip"/>-<span t-field="docs[0].partner_id.city"/></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Country:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.country_id.name"/></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Phone:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.phone"/></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">E-mail:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.email"/></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">VAT nr:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.parent_id.vat"/></td></tr>
+   			
+   		
+   		</table>
+   		
+   		<br/>
+   		<br/>
+   		<table width="100%">
+   			<tr><td style="border: 1px solid black;text-align:center;background-color:orange;" colspan="4">For agreement</td></tr>
+   			<tr><td style="border: 1px solid black">Responsable's name</td><td style="border: 1px solid black"><span t-field="docs[0].partner_id.name"/></td><td colspan="2" style="border: 1px solid black">Signature:<br/><br/><br/><br/></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Title / Function<br/></td><td  width="35%" style="border: 1px solid black"><span t-field="docs[0].partner_id.function"/></td><td style="border: 1px solid black"  width="15%">Date</td><td style="border: 1px solid black"></td></tr>
+   		
+   		</table>
+   </template>
+    
+    <template id="sale_order_display_order">
+                 <table class="table table-condensed">
+                 <thead>
+                     <tr>
+                     	<th>Line Ref</th>
+                         <th>Description</th>
+                         <th>Taxes</th>
+                         <th class="text-right">Quantity</th>
+                         <th class="text-right">Unit Price</th>
+                         <th groups="sale.group_discount_per_so_line">Disc.(%)</th>
+                         <th class="text-right">Price</th>
+                     </tr>
+                </thead>
+                <t t-foreach="docs[0].sale_layout_lines(order_id = docs[0].id)" t-as="p">
+                     <!-- Name of the category -->
+                     <t t-call="sale_layout.category_template"/>
+                     <!-- Lines associated -->
+                     <t t-foreach="p['lines']" t-as="l">
+                         <tr>
+                         	<td><span t-field="l.identifier"/></td>
+                             <td>
+                                <span t-field="l.name"/>
+                             </td>
+                             <td>
+                                 <span t-esc="', '.join(map(lambda x: x.name, l.tax_id))"/>
+                             </td>
+                             <td class="text-right">
+                                 <span t-field="l.product_uom_qty"/>
+                                 <span groups="product.group_uom" t-field="l.product_uom"/>
+                             </td>
+                             <td class="text-right">
+                                 <span t-field="l.price_unit"/>
+                             </td>
+                             <td groups="sale.group_discount_per_so_line">
+                                 <span t-field="l.discount"/>
+                             </td>
+                             <td class="text-right">
+                                 <span t-field="l.price_subtotal"/> €
+                             </td>
+                         </tr>
+                     </t>
+
+                     <!-- Subtotal -->
+                     <t t-call="zenawtol.subtotal_template"/> 
+
+                     <!-- Separator -->
+                     <t t-call="sale_layout.separator_template"/> 
+
+                     <!-- Pagebreak -->
+                     <t t-if="'pagebreak' in p['category'] and p['category'].pagebreak is True">
+                         <t t-if="p_index &lt; p_size - 1">
+                             &lt;/tbody&gt;
+                             &lt;/table&gt;
+                             &lt;p style="page-break-before:always;"&gt; &lt;/p&gt;
+                             &lt;table class="table table-condensed"&gt;
+
+                             <thead>
+                                 <tr>
+									<th>Description</th>
+                                     <th>Taxes</th>
+                                     <th class="text-right">Quantity</th>
+                                     <th class="text-right">Unit Price</th>
+                                     <th groups="sale.group_discount_per_so_line">Disc.(%)</th>
+                                     <th class="text-right">Price</th>
+                                 </tr>
+                            </thead>
+
+                                 &lt;tbody&gt;
+
+                         </t>
+                     </t>
+                 </t>
+             </table>
+
+             <div class="row">
+                 <div class="col-xs-4 pull-right">
+                     <table class="table table-condensed">
+                         <tr class="border-black">
+                             <td><strong>Total Without Taxes</strong></td>
+                             <td class="text-right">
+                                 <span t-field="docs[0].amount_untaxed"/>€
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>Taxes</td>
+                             <td class="text-right">
+                                 <span t-field="docs[0].amount_tax"/>€
+                             </td>
+                         </tr>
+                         <tr class="border-black">
+							<td><strong>Total</strong></td>
+                             <td class="text-right">
+                                 <span t-field="docs[0].amount_total"/>€
+                             </td>
+                         </tr>
+                     </table>
+                 </div> 
+             </div>
+</template>
+    
+    
+    <template id="sale_order_page3">
+    	<p t-foreach="docs[0].zen_contents" t-as="o">
+    	<t t-if="o.display_order or o.display_contract">
+    		<p style="page-break-before:always;"> </p>
+    	</t>
+    		<h3><span t-field="o.zen_number"/> - <span t-field="o.name"/></h3>
+    		<br/>
+    		<t t-if="o.display_order">
+    			<t t-call="zenawtol.sale_order_display_order"/>
+    		</t>
+    		<span t-field="o.zen_content"/>
+    		<br/>
+
+    		<t t-if="o.display_contract">
+    			<t t-call="zenawtol.sale_order_display_contract"/>
+    		</t>
+    		
+    	 <t t-if="o.display_contract">
+    		<p style="page-break-before:always;"> </p>
+    	</t>
+    	</p>	
+    </template>
+    
+    
+    
+    
+    
+    <template id="sale_order_page_tablematiere">
+    		<h3>1-Table des matières</h3>
+    		<span t-field="docs[0].zen_table_matiere"/>
+    		<p style="page-break-before:always;"> </p> 
+    </template>
+    
+    <template id="sale_order_page2">
+    		<br/>
+    		<br/>
+    		<table width="100%">
+    			<tr><td width="25%"></td><td></td></tr>
+    			<tr style="border: 1px solid black">
+    				<td colspan="2">Projet : <span t-field="docs[0].project_id"/></td>
+    			</tr>
+    			<tr style="border: 1px solid black">
+    				<td colspan="2">-</td>
+    			</tr>
+    			<tr style="border: 1px solid black"><td style="border: 1px solid black">Auteur</td><td style="border: 1px solid black"><span t-field="docs[0].user_id"/></td></tr>
+    			<tr><td style="border: 1px solid black">E-mail</td><td style="border: 1px solid black"><span t-field="docs[0].zen_mail"/></td></tr>
+    			<tr><td style="border: 1px solid black">GSM</td><td style="border: 1px solid black"><span t-field="docs[0].zen_gsm"/></td></tr>
+    			<tr><td style="border: 1px solid black">Date</td><td style="border: 1px solid black"><span t-field="docs[0].user_id"/></td></tr>
+    			<tr><td style="border: 1px solid black">Référence</td><td style="border: 1px solid black"><span t-field="docs[0].zen_ref"/></td></tr>
+    			<tr><td style="border: 1px solid black">Validation</td><td style="border: 1px solid black"><span t-field="docs[0].zen_validation"/></td></tr>
+    			<tr><td style="border: 1px solid black">Document de <br/>référence</td><td style="border: 1px solid black"><span t-field="docs[0].zen_doc_ref"/></td></tr>
+    			<tr><td style="border: 1px solid black">Annexe(s)</td><td style="border: 1px solid black"><span t-field="docs[0].zen_annexes"/></td></tr>
+    		</table>
+    		<br/><br/>
+    		<table width="100%">
+    			<tr><td style="border: 1px solid black"><b>Résumé</b></td></tr>
+    			<tr><td style="border: 1px solid black"><span t-field="docs[0].zen_resume"/></td></tr>
+    		</table>
+    		<br/>
+    		<table width="100%">
+    			<tr>
+    				<td style="border: 1px solid black">Version</td>
+    				<td style="border: 1px solid black">Initiateur des <br/>Modifications</td>
+    				<td style="border: 1px solid black">Modifications</td>
+    				<td style="border: 1px solid black">Date</td>
+    				<td style="border: 1px solid black">Auteurs</td>
+    			</tr>
+    			<p t-foreach="docs[0].zen_histo" t-as="o">
+    				<tr>
+	    				<td style="border: 1px solid black"><span t-field="o.zen_version"/></td>
+	    				<td style="border: 1px solid black"><span t-field="o.zen_initiateur_modifications"/></td>
+	    				<td style="border: 1px solid black"><span t-field="o.zen_modifications"/></td>
+	    				<td style="border: 1px solid black"><span t-field="o.zen_date"/></td>
+	    				<td style="border: 1px solid black">
+	    				<p t-foreach="o.zen_auteurs" t-as="o2">
+	    					<span t-field="o2.name"/>
+	    				</p>
+	    				</td>
+    				</tr>
+    			</p>
+    		</table>
+    		<p style="page-break-before:always;"> </p> 
+    </template>
+    
+    
+    <template id="sale_order_page1">
+    		<br></br>
+    		<br></br>
+    		<table width="100%">
+    			<tr>
+    				<td width="50%">
+    					<table>
+    						<tr><td width="20%"><b>Objet:</b></td><td><b><span t-field="docs[0].zen_object"/></b><br/><br/><br/><br/><br/></td></tr>
+    						<tr><td>Date:</td><td><span t-field="docs[0].date_order"/></td></tr>
+    						<tr><td>Our ref.:</td><td><span t-field="docs[0].client_order_ref"/></td></tr>
+    					</table>
+    				</td>   			
+    				<td width="50%" style="border: 1px solid black">
+    						A l'attention de <span t-field="docs[0].partner_id.name"/><br/>
+    						<br/>
+    						<span t-field="docs[0].partner_id.function"/><br/>
+    						<br/>
+    						<span t-field="docs[0].partner_id.parent_id"/><br/>
+    						<span t-field="docs[0].partner_id.street"/><br/>
+    						<span t-field="docs[0].partner_id.country_id.code"/>-<span t-field="docs[0].partner_id.zip"/> <span t-field="docs[0].partner_id.city"/><br/>	
+    				</td>
+    			</tr>
+    		</table>
+    		<br/><br/><br/><br/><br/><br/>
+    		<div>
+    		<span t-field="docs[0].zen_presentation"/>
+    		</div>
+    		<p style="page-break-before:always;"> </p> 
+    </template>
+    
+    <template id="sale_order_header">
+    	<div class="header">
+    		<table width="100%">
+    				<tr><td><b>Client : <span t-field="docs[0].partner_id"/></b></td>							<td align="right">AWTOL S.a.r.l.</td></tr>
+    				<tr><td>Document : </td>																	<td align="right">Rue du commerce</td></tr>
+    				<tr><td>AWTOL S.a.r.l Proprietary and Confidentuial 2017</td>								<td align="right">L-3895 FOETZ</td></tr>
+    				<tr><td style="color:red;"><span t-field="docs[0].zen_document_type"/></td>																	<td align="right">Luxembourg</td></tr>
+    				<tr><td style="border-bottom: 1px solid black"></td>										<td style="border-bottom: 1px solid black" align="right">VAT: LU29010453</td></tr>
+    		</table>
+    		
+    	</div>
+    	<div class="footer">
+    	<table width="100%">
+	    	<tr>
+	    			<td colspan="3"><img src='/zenawtol/static/src/img/Ligne.png' style="max-height: 30px;" width="100%"/></td></tr>
+	    	
+	    		<tr>
+	    			<td><img src='/zenawtol/static/src/img/LOGO.png' style="max-height: 30px;"/></td>
+	    			<td style="margin:10px 0px 0px;vertical-align:top;text-align:center;padding:0px;font-family:arial;font-size:10px;color:rgb(51,51,51)">R.C.S Luxembourg n°B210701 - TVA (VAT) LU 29010453 - Business Licences: 10075510 / 0 <br/> Banque:BIL LU61 0022 4101 4327 5600 - Code SWIFT/BIC : BILLLULL</td>
+	    			<td>Page:<span class="page"/>/<span class="topage"/></td>
+	    		</tr>
+	    	
+	    	</table>
+    	</div>
+    </template>
+    
+
+</data>
+</openerp>
+

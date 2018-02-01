@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zen_histo,access_zen_histo,model_zen_histo,,1,1,1,1
+access_zen_sale_implication,access_zen_sale_implication,model_zen_sale_implication,,1,1,1,1
+access_zen_tag_contract,access_zen_tag_contract,model_zen_tag_contract,,1,1,1,1
+access_zen_model_chapter,access_zen_model_chapter,model_zen_model_chapter,,1,1,1,1
+access_zen_chapter,access_zen_chapter,model_zen_chapter,,1,1,1,1
+access_zen_order_model4,access_zen_order_model4,model_zen_order_model4,,1,1,1,1
+access_zenawtol_report_alltax,access_zenawtol_report_alltax,model_zenawtol_report_alltax,,1,1,1,1
+access_zenawtol_report_base_return,access_zenawtol_report_base_return,model_zenawtol_report_base_return,,1,1,1,1
+access_zenawtol_report_tax_return,access_zenawtol_report_tax_return,model_zenawtol_report_tax_return,,1,1,1,1
+access_zenawtol_report_tax_return_by_account,access_zenawtol_report_tax_return_by_account,model_zenawtol_report_tax_return_by_account,,1,1,1,1
+access_zen_document_type,access_zen_document_type,model_zen_document_type,,1,1,1,1

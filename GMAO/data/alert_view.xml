@@ -1,0 +1,51 @@
+<openerp>
+    <data noupdate="1">
+        <record id="ir_cron_scheduler_equipment_action" model="ir.cron">
+            <field name="name">equipment scheduler</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'equipment.scheduler'" name="model"/>
+            <field eval="'process_scheduler_queue'" name="function"/>
+        </record>
+
+
+        <!-- Créer une template pour l'envoi de notification -->
+        <record id="end_equipment_email_template" model="email.template">
+            <field name="name">End equipment waranty e-mail template</field>
+            <field name="email_from">Administrateur</field>
+            <field name="subject">Fin de garantie</field>
+            <field name="email_to">${object.nom_instal.name|safe}</field>
+            <field name="model_id" ref="GMAO.model_machine"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                      <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34);">
+                            <p>Bonjour,</p>
+                            <p>La fin de garantie pour cette machien est prevue pour </p>
+                        </div>
+                    ]]>
+            </field>
+        </record>
+
+        <record id="notify_end_equipment_email_template" model="email.template">
+            <field name="name">Notify End equipment e-mail template</field>
+            <field name="email_from">Administrateur</field>
+            <field name="subject">Date d'echeance de la garantie</field>
+            <field name="email_to">${object.nom_instal.name|safe}</field>
+            <field name="model_id" ref="GMAO.model_machine"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                      <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34);">
+                            <p>Bonjour,</p>
+                            <p>Le contrat va arrivé a echeance dans ${days} Jours</p>
+                        </div>
+                    ]]>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+
+          <record id="view_zendescription_users_form" model="ir.ui.view">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                                 <label for="mysequence"/><field name="mysequence"/>
+                        </xpath>
+
+            </field>
+        </record>
+
+
+
+           
+        <record id="view_zen_account_invoice_form" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                <div>
+                	<field name="zen_description_model" on_change="model_description_change(zen_description_model, zen_description)"/>
+            		<field name="zen_description"/>
+            	</div>
+		</xpath>
+                <xpath expr="//field[@name='comment']" position="after">
+                <div>
+                        <field name="zen_description_model_cgv" on_change="model_description_change_cgv(zen_description_model_cgv,zen_description_cgv)"/>
+                        <field name="zen_description_cgv"/>
+                </div></xpath>
+
+		</field>
+	</record>
+		
+		
+        <record id="view_zen_saleorder_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="before">
+                        <field name="zen_description_model" on_change="model_description_change(zen_description_model, zen_description)"/>
+                        <field name="zen_description"/>
+                </xpath>
+                <xpath expr="//field[@name='note']" position="after">
+                        <field name="zen_description_model_cgv" on_change="model_description_change_cgv(zen_description_model_cgv,zen_description_cgv)"/>
+                        <field name="zen_description_cgv"/>
+                </xpath>
+
+                </field>
+        </record>
+
+		
+		
+	<record id="view_easydescription_form" model="ir.ui.view">
+            <field name="name">esay.desciption.form</field>
+            <field name="model">esay.desciption</field>
+            <field name="arch" type="xml">
+                <form string="Description">
+                  <group>
+                    <field name="name"/>
+        			<field name="description"/>
+        		  </group>
+        		</form>
+        	</field>
+        </record>
+        
+        
+        <record id="view_easydescription_cgvform" model="ir.ui.view">
+            <field name="name">esay.desciption.cgv.form</field>
+            <field name="model">esay.desciption.cgv</field>
+            <field name="arch" type="xml">
+                <form string="Description">
+                  <group>
+                    <field name="name"/>
+        			<field name="description"/>
+        		  </group>
+        		</form>
+        	</field>
+        </record>
+   </data>
+</openerp>
+

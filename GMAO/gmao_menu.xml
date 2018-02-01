@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <menuitem id="menu_gmao_sub" name="GMAO" sequence="10"/>
+
+
+        <menuitem id="menu_projet_main" name="Projet" parent="menu_gmao_sub" sequence="40"/>
+
+        <menuitem id="menu_projet" name="Projet" parent="menu_projet_main" sequence="40"
+            action="act_open_projet_view"/>
+
+        <menuitem id="menu_site_main" name="Site" parent="menu_gmao_sub" sequence="40"/>
+        <menuitem id="menu_site" name="Site" parent="menu_site_main" sequence="40"
+            action="act_open_site_view"/>
+
+
+        <menuitem id="menu_machine_main" name="Machine" parent="menu_gmao_sub" sequence="05"/>
+
+        <menuitem id="menu_machine" name="Machine" parent="menu_machine_main" sequence="05"
+            action="act_open_machine_view"/>
+            <menuitem id="menu_intervention_main" name="Demande" parent="menu_gmao_sub" sequence="15"/>
+
+        <menuitem id="menu_intervention" name="Demande d'intervention" parent="menu_intervention_main" sequence="20"
+            action="action_intervention_tree_view"/>
+        <!-- corrective & preventive maintenance -->
+
+
+
+        <menuitem id="menu_type_maintenance_main" name="Type maintenance" parent="menu_gmao_sub" sequence="30"/>
+
+        <!--menuitem id="menu_type_maintenance" name=" maintenance corrective" parent="menu_type_maintenance_main" sequence="30"
+            action="act_open_type_maintenance_view"/-->
+        <menuitem id="menu_maintenance_corrective" name=" maintenance corrective" parent="menu_type_maintenance_main" sequence="30"
+            action="act_open_corrective_view"/>
+        <menuitem id="menu_type_preventive" name=" maintenance preventive" parent="menu_type_maintenance_main" sequence="30"
+            action="open_view_pm_new"/>
+
+        <menuitem id="menu_technicien_main" name="Technicien" parent="menu_gmao_sub" sequence="40"/>
+
+        <menuitem id="menu_Technicien" name="Technicien" parent="menu_technicien_main" sequence="40"
+            action="act_open_technicien_view"/>
+
+        <menuitem id="menu_produits_main" name="Produits et Péces" parent="menu_gmao_sub" sequence="45"/>
+
+        <menuitem id="menu_produits" name="Produits" parent="menu_produits_main" sequence="45"/>
+        <menuitem id="menu_pieces" name="Pieces" parent="menu_produits_main" sequence="45"  />
+
+
+        <menuitem id="menu_client_main" name="Client" parent="menu_gmao_sub" sequence="45"/>
+          <menuitem id="menu_client" name="Client" parent="menu_client_main" sequence="11"
+            action="act_open_client_view"/>
+
+        <menuitem id="menu_Sous_traitent_main" name="Sous-traitant" parent="menu_gmao_sub" sequence="45"/>
+          <menuitem id="menu_Sous_traitent" name="Sous-traitant" parent="menu_Sous_traitent_main" sequence="11"
+            action="act_open_traite_view"/>
+
+        <menuitem id="menu_pieces_main" name="pieces" parent="menu_gmao_sub" sequence="45"/>
+          <menuitem id="menu_pieces" name="pieces" parent="menu_pieces_main" sequence="11"
+            action="act_open_piece_view"/>
+
+        <menuitem id="menu_type_main" name="Moteurs" parent="menu_gmao_sub" sequence="59"/>
+        <menuitem id="menu_type" name="Moteurs" parent="menu_type_main" sequence="59"
+            action="act_open_type_view"/>
+
+
+    </data>
+</openerp>

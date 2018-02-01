@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="wkf_intervention" model="workflow">
+            <field name="name">intervention.wkf</field>
+            <field name="osv">intervention</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record id="act_draft_inter" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_intervention"/>
+            <field name="flow_cancel">True</field>
+            <field name="name">draft</field>
+        </record>
+
+        <record id="act_cancel_inter" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_intervention"/>
+            <field name="action">write({'state':'cancel'})</field>
+			<field name="kind">function</field>
+            <field name="name">maintenance</field>
+        </record>
+        <record id="act_end_inter" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_intervention"/>
+            <field name="action">end_intervention()
+                write({'state':'done'})</field>
+			<field name="kind">function</field>
+            <field name="name">done</field>
+        </record>
+
+        <record id="isw" model="workflow.transition">
+            <field name="act_from" ref="act_end_inter"/>
+            <field name="act_to" ref="act_cancel_inter"/>
+            <field name="signal">cancel_intervention</field>
+        </record>
+
+        <record id="iew" model="workflow.transition">
+            <field name="act_from" ref="act_draft_inter"/>
+            <field name="act_to" ref="act_end_inter"/>
+            <field name="signal">end_intervention</field>
+        </record>
+    </data>
+</openerp>

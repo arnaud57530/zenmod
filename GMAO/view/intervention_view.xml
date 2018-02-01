@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_intervention_filter" model="ir.ui.view">
+            <field name="name">intervention.select</field>
+            <field name="model">intervention</field>
+            <field name="arch" type="xml">
+                <search string="Chercher ...">
+                    <filter name="diagnostique" string="Diagnostiques" domain="[('type','=','diagnostic')]"/>
+                    <filter name="maintenance" string="Maintenance" domain="[('type','=','maintenance')]"/>
+                    <filter name="done" string="Terminées" domain="[('type','=','done')]"/>
+                    <separator/>
+                    <filter string='Très urgent' domain="[('delai', '=', 'tu')]" icon="terp-personal"/>
+                    <filter string='Urgent' domain="[('delai', '=', 'urgent')]" icon="terp-personal"/>
+                    <filter string='Normal' domain="[('delai', '=', 'normal')]" icon="terp-personal"/>
+
+                    <group expand="0" string="Regrouper par">
+                        <filter string="Groupe" icon="terp-personal" context="{'group_by': 'equipment_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="intervention_calendar">
+            <field name="name">Calendrier des interventions</field>
+            <field name="model">intervention</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar string="Intervention"
+                          date_start="date" date_stop="date_end" color="intervenant">
+                    <field name="responsable"/>
+                    <field name="duration"/>
+                </calendar>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="gmao_kanban_view_intervention">
+            <field name="name">intervention Kanban</field>
+            <field name="model">intervention</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state">
+                    <field name="type"/>
+                    <field name="name"/>
+                    <field name="color"/>
+                    <field name="delai"/>
+                    <field name="intervenant"/>
+                    <field name="responsable"/>
+                    <field name="duration"/>
+                    <field name="equipment_id"/>
+                    <field name="date"/>
+                    <field name="date_end"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-tooltip">
+                            <ul class="oe_kanban_tooltip">
+                                <li t-if="record.equipment_id.raw_value">
+                                    <b>Equipement:</b>
+                                    <field name="equipment_id"/>
+                                </li>
+                                <li t-if="demandeur.raw_value">
+                                    <b>Demandeur</b>
+                                    <field name="demandeur"/>
+                                </li>
+                            </ul>
+                        </t>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click oe_semantic_html_override">
+                                <div class="oe_dropdown_toggle oe_dropdown_kanban">
+                                    <span class="oe_e">i</span>
+                                    <ul class="oe_dropdown_menu">
+                                        <t t-if="widget.view.is_action_enabled('delete')">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                        </t>
+                                        <li>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_content" tooltip="kanban-tooltip">
+                                    <div>
+                                        <t t-if="record.responsable.raw_value">
+                                            <b>
+                                                <field name="responsable"/>
+                                            </b>
+                                            <br/>
+                                        </t>
+                                        <i>
+                                            <field name="equipment_id"/>
+                                        </i>
+                                        <br/>
+                                    </div>
+                                    <div style="padding-left: 0.5em">
+                                        <t t-if="record.date_end.raw_value and record.date_end.raw_value lt (new Date())"
+                                           t-set="red">oe_kanban_text_red
+                                        </t>
+                                        <span t-attf-class="#{red || ''}">
+                                            <field name="date_end"/>
+                                        </span>
+                                        <t t-if="record.date_end.raw_value">:</t>
+                                        <field name="name"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <div class="pull-left" groups="base.group_user">
+                                            <field name="delai" widget="priority"/>
+                                        </div>
+                                    </div>
+                                    <div class="oe_kanban_footer_left" style="margin-top:5px;">
+                                        <t t-raw="record.date.raw_value"/>
+                                        <a t-if="record.state" name="group_by_state" type="object"
+                                           style="margin-right: 10px">
+                                            <field name="state"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="intervention_tree_view">
+            <field name="name">intervention.tree</field>
+            <field name="model">intervention</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Les interventions">
+                    <field name="name"/>
+                    <field name="responsable"/>
+                    <field name="equipment_id"/>
+                    <field name="intervenant"/>
+                    <field name="date"/>
+                    <field name="date_end"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="intervention_form" model="ir.ui.view">
+            <field name="name">intervention.form</field>
+            <field name="model">intervention</field>
+            <field name="arch" type="xml">
+                <form string="Les interventions">
+                    <header>
+                        <button name="create_corrective"
+                                type="object"
+                                string="M/Corrective"
+                                class="oe_hightlight"
+                                attrs="{'invisible': [('state_end', '!=', False)]}"
+                        />
+                        <button name="cloturer"
+                                type="object"
+                                string="Clôturer"
+                                class="oe_hightlight"
+                                attrs="{'invisible': [('state_end', '!=', False)]}"
+                        />
+                        <field name='state_end' invisible="True"/>
+                        <!-- clickable="True" -->
+                        <field name="state" widget="statusbar"
+                               options="{'fold_field': 'fold'}"/>
+                    </header>
+                    <sheet>
+                        <group col='4'>
+                            <field name='name'/>
+                            <field name='equipment_id'/>
+                            <field name='demandeur'/>
+
+
+                            <field name='delai' String='Délais pour intervention'/>
+                            <field name='responsable'/>
+
+
+                            <field name='date'/>
+                            <field name='date_end' readonly="0"/>
+                        </group>
+                        <div class="oe_clear"/>
+                        <notebook colspan="1">
+                            <page string="Motif d'intervention">
+                                <field name="motif" class="oe_inline" placeholder="Motif de l'intervention..."/>
+                            </page>
+                            <page string="Observation">
+                                <field name="classification" class="oe_inline"
+                                       placeholder="Classification de l'intervention (non-conformité d’équipement ou d’installation, remplacement dans le cadre de la garantie)..."/>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+
+                </form>
+
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_intervention_tree_view">
+            <field name="name">intervention</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">intervention</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form,calendar</field>
+            <field name="view_id" ref="view_intervention_filter"/>
+            <field name="view_id" ref="gmao_kanban_view_intervention"/>
+        </record>
+    </data>
+</openerp>

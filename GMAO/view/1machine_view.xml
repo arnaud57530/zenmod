@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_machine_filter" model="ir.ui.view">
+            <field name="name">machine.select</field>
+            <field name="model">machine</field>
+            <field name="arch" type="xml">
+                <search string="Chercher ...">
+
+                    <separator/>
+                    <filter domain="[('active','=', True)]" help="Activée" icon="terp-personal"/>
+                    <filter domain="[('active','=', False)]" help="Désactivée" icon="terp-personal"/>
+                    <group expand="0" string="Regrouper par">
+                        <filter string="Projet" icon="terp-personal" context="{'group_by': 'projet'}"/>
+                        <filter string="Site" icon="terp-personal" context="{'group_by': 'site'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="view_machine_tree" model="ir.ui.view">
+            <field name="name">machine.tree</field>
+            <field name="model">machine</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="machine" colors="blue:state==1;red:state==2;gray:state==3">
+                    <field name='name'/>
+                    <field name="date_ser"/>
+
+                    <field name="date_gar"/>
+
+                    <field name="puissance"/>
+                    <field name="nom_instal"/>
+                    <field name="active"/>
+                    <!--field name="state" invisible="1"/-->
+                </tree>
+            </field>
+        </record>
+        <record id="view_machine_form" model="ir.ui.view">
+            <field name="name">machine.form</field>
+            <field name="model">machine</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="machine">
+                    <sheet>
+                        <!--field name="state" invisible="1"/-->
+                        <!--field name="days_alert" invisible="1"/-->
+
+                        <field name="photo" widget='image' class="oe_left oe_avatar"/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" class="oe_read_only"/>
+                                <field name="number" invisible="True"/>
+                            </h1>
+                        </div>
+                        <div class="oe_right oe_button_box">
+                            <button name="return_action_to_open"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-book"
+                                context="{'xml_id':'action_intervention_tree_view'}"
+                                help="show the Intervention for this Equipement">
+                               <field name="intervention_count" widget="statinfo" string="Interventions"/>
+                            </button>
+                            <button name="return_action_to_open"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-wrench"
+                                context="{'xml_id':'open_view_pm_new'}"
+                                help="show the Preventive maintenance for this Equipement">
+                               <field name="pm_count" widget="statinfo" string="M.P"/>
+                            </button>
+                            <button name="return_action_to_open"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-cogs"
+                                context="{'xml_id':'open_view_pm_new'}"
+                                help="show the Preventive maintenance for this Equipement">
+                               <field name="cm_count" widget="statinfo" string="M.C"/>
+                            </button>
+                             <button name="return_action_to_open"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-building-o"
+                                context="{'xml_id':'open_view_bon_new'}"
+                                help="show the Preventive maintenance for this Equipement">
+                               <field name="order_count" widget="statinfo" string="Bon de Travail"/>
+                            </button>
+                        </div>
+                        <!--field name="sent" invisible="0"/-->
+                        <group string="Information Général">
+                            <group>
+                                <field name="active"/>
+                                <field name="type"/>
+                                <field name="const"/>
+                                <field name="num_serie_un"/>
+                                <field name="num_serie_deux"/>
+                                <field name="num_serie_trois"/>
+                                <field name="puissance"/>
+                                <field name="client"/>
+                                <field name="projet"/>
+                                <field name="site"/>
+
+                            </group>
+                            <group>
+                                <field name="nom_instal"/>
+                                <field name="meter" invisible="True"/>
+                                <field name="date_liv"/>
+                                <field name="date_ser"/>
+                                <field name="deadlinegar_2"/>
+                                <field name="date_gar"/>
+                                <field name="days_of_overtime" readonly="True"/>
+                                <field name="date_of_extension"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string=" Informations Supplémentaire ">
+                                <field name="information"/>
+                            </page>
+                            <page string="Maintenance Corrective">
+                                <field name="cm_ids"/>
+                            </page>
+                            <page string="Maintenance Preventive">
+                                <field name="pm_ids"  nolabel="1" widget="one2many_list">
+                                    <tree editable="bottom" create="0" delete="0">
+                                        <field name="seq" invisible="1"/>
+                                        <field name="name" attrs="{'readonly': [('state_end', '!=', False)]}"/>
+                                        <field name="hours_interval" invisible="1" attrs="{'readonly': [('state_end', '!=', False)]}"/>
+                                        <field name="hour_interval"/>
+                                        <field name="rate_of_use" attrs="{'readonly': [('state_end', '!=', False)]}"/>
+                                        <field name="days_last_done" attrs="{'readonly': [('state_end', '!=', False)]}"/>
+                                        <field name="days_next_due"/>
+                                        <field name="days_warn_period" attrs="{'readonly': [('state_end', '!=', False)]}"/>
+                                        <field name="days_left"/>
+                                        <field name="state" readonly="1"/>
+                                        <field name="state_end" invisible="1"/>
+                                        <!--field name="cadence" invisible="1"/-->
+                                        <button name="pm_end"
+                                                type="object"
+                                                icon="gtk-preferences"
+                                                help="Clôturer"
+                                                class="oe_read_only"
+                                                attrs="{'invisible': [('state_end', '!=', False)]}"
+                                        />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_machine_view">
+            <field name="name">machine</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">machine</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form, tree</field>
+            <field name="view_id" ref='view_machine_filter'/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_machine_view_form">
+            <field name="act_window_id" ref="act_open_machine_view"/>
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_machine_form"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="act_open_machine_view_tree">
+            <field name="act_window_id" ref="act_open_machine_view"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_machine_tree"/>
+        </record>
+
+    </data>
+</openerp>
