@@ -187,6 +187,7 @@ class Corrective(models.Model):
     intervention_id = fields.Many2one('intervention', 'Intervention')
     bon_id = fields.Many2one('bon', 'Bon de travail')
     state_end = fields.Boolean()
+    ref_intervention = fields.Char(related='intervention_id.name', store=True,readonly='True',)
 
     @api.onchange('date_from','date_to') 
     def _check_change(self):
