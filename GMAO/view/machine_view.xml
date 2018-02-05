@@ -96,10 +96,16 @@
                                 <field name="type"/>
                                 <field name="const"/>
                                 <field name="num_serie_un"/>
-                                <field name="num_serie_deux"/>
-                                <field name="alternateur"/>
+                                <field name="num_serie_deux" attrs="{'readonly': [('choix_moteur', '=', True)]}"/>
+                                <field name="choix_moteur"/>
+                                <field name="nouveau_moteur" attrs="{'invisible': [('choix_moteur', '=', False)]}" colspan="1" help=""/> 
+                                
+                                <field name="alternateur" />
+                                
                                 <field name="constr"/>
-                                <field name="num_serie_trois"/>
+                                <field name="num_serie_trois" attrs="{'readonly': [('choix_alternateur', '=', True)]}"/>
+                                <field name="choix_alternateur"/>
+                                <field name="nouveau_alternateur" attrs="{'invisible': [('choix_alternateur', '=', False)]}"/>
                                 <field name="puissance"/>
                                  <field name="client"/>
                                 <field name="projet"/>
