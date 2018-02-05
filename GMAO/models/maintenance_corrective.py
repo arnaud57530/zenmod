@@ -106,6 +106,7 @@ class Corrective(models.Model):
 
         bon_id = bon_obj.create(
             {'equipment_id': self.equipment_id.id,
+             'pannes2' : self.panne.cause,
              'ref': 'corrective,{}'.format(self.id),
              'responsable': [(4, self.responsable.ids)]
              })

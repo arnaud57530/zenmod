@@ -38,6 +38,7 @@
                             <field name="name" />
                             <field name="date" />
                             <field name="priority" />
+                            <field name="pannes2" />
                         </group>
                         <group colspan="1" col="2">
                             <separator string="Bon state" colspan="2" />

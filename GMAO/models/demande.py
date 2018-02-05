@@ -61,7 +61,9 @@ class Bon(models.Model):
 
     def _set_equipment_id(self):
         if self.ref and self.ref.equipment_id:
+            print "argarg---------------------", self.ref.panne.cause
             self.equipment_id = self.ref.equipment_id.id
+            self.pannes = self.ref.panne.cause
 
     @api.onchange('ref')
     def _onchange_ref(self):
@@ -86,6 +88,8 @@ class Bon(models.Model):
     responsable = fields.Many2many('technicien', string='Technicien')
 
     piece_ids = fields.One2many('pieces', 'bon_id')
+    
+    pannes2 = fields.Char(string='Panne')
 
 
 
