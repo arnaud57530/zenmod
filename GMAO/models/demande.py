@@ -44,17 +44,17 @@ class Bon(models.Model):
         objects = obj.search([])
         return [(r['object'], r['name']) for r in objects]
 
-    @api.multi
+    @api.one
     def action_done(self):
         self.state = 'done'
         return True
 
-    @api.multi
+    @api.one
     def action_cancel(self):
         self.state = 'cancel'
         return True
 
-    @api.multi
+    @api.one
     def action_draft(self):
         self.state = 'draft'
         return True

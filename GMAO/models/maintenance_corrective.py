@@ -20,7 +20,7 @@
 ###############################################################################
 
 from openerp import models, fields, api
-import datetime
+from datetime import datetime
 import time
 from openerp.tools.translate import  _
 import logging
@@ -136,6 +136,7 @@ class Corrective(models.Model):
         if state:
             self.state = state.id
             self.state_end = True
+            self.date_to = datetime.now().strftime('%Y-%m-%d')
             self.update_equipment()
 
             # Clôturer la demande d'intrvention et le bon de travail
@@ -228,7 +229,7 @@ class Corrective(models.Model):
         print "write values : ", vals
         rec = super(Corrective, self).write(vals)
         self.equipment_id.compute_days_of_overtime()
-        rec.equipment_id.compute_cm_count()
+        self.equipment_id.compute_cm_count()
         return rec    
     
 
