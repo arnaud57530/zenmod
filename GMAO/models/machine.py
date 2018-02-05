@@ -126,7 +126,7 @@ class Machine(models.Model):
     @api.one
     @api.depends('num_serie_un', 'puissance', 'projet.name')
     def _compute_name(self):
-        self.name = '/'.join([self.projet.name or '',self.site.abri or '',str(self.puissance),(self.num_serie_un or '')[7:14]]) +  "M" if self.choix_moteur else "" + "G" if self.choix_alternateur else ""
+        self.name = '/'.join([self.projet.name or '',self.site.abri or '',str(self.puissance),(self.num_serie_un or '')[7:14]]) +  ("M" if self.choix_moteur else "") + ("G" if self.choix_alternateur else "")
 
 
     def _get_pm_values(self, date_ser, type_id):
