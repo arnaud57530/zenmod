@@ -167,6 +167,7 @@ class Machine(models.Model):
     #         days_last_done += timedelta(2000)
 
     name = fields.Char(string='Nom de la Machine', compute=_compute_name, track_visibility='always',store=False)
+    num_contract= fields.Char(string="Numéro Contract")
     number = fields.Char()
     photo = fields.Binary('Photo')
     active = fields.Boolean('Active',default=True)
@@ -185,6 +186,8 @@ class Machine(models.Model):
     date_of_extension = fields.Date(compute=_compute_overtime, string='Date de prolongation')
     type = fields.Many2one('type',required=True,)
     const = fields.Char(related='type.const', store=False,readonly='True',)
+    alternateur = fields.Many2one('alternateur',required=True ,)
+    constr = fields.Char(related='alternateur.constr', store=False,readonly='True',)
     num_serie_un = fields.Char(string="N° de Série  groupe")
     num_serie_deux = fields.Char(string="N° de série du moteur ")
     num_serie_trois = fields.Char(string="N° de série de l'altérnateur")
@@ -192,8 +195,8 @@ class Machine(models.Model):
     nom_instal = fields.Many2one('technicien', string="Respensble Projet")
     etat = fields.Selection([('marche', 'Marche'), ('arreter', 'Arreter')], string="Etat de produit")
     client = fields.Many2one('client', required=True, string='Client')
-    projet = fields.Many2one('projet', 'Projet', required=True)
-    site = fields.Many2one(related='projet.site', store=True)
+    site = fields.Many2one('site', )
+    projet = fields.Many2one(related='site.projet',store=True)    
     local = fields.Selection(related='projet.local', store=True)
     information = fields.Html(string='Information')
 

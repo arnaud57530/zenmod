@@ -22,11 +22,10 @@
 from openerp import models, fields, api
 
 
-class Projet(models.Model):
+class projet(models.Model):
     _name = 'projet'
 
     name = fields.Char(string="Projet", required=True, )
-    site = fields.Many2one('site', string="Site", required=True,)
-    local = fields.Selection(string="Localisation", selection=[('upse', 'UPSE'), ('upso', 'UPSO'), ], required=False, )
+    local = fields.Selection(string="Localisation", selection=[('upse', 'UPSE'), ('upso', 'UPSO'),('centre', 'CENTRE'), ], required=False, )
     # machine_id =fields.One2many('detail_machine')
     # details_machine = fields.One2many(related='site.details_machine')

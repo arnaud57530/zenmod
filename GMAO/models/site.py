@@ -26,5 +26,6 @@ class Site(models.Model):
     _name = 'site'
 
     name = fields.Char(string="Site", required=True)
+    projet = fields.Many2one('projet', string="Projet", required=True,)
     abri = fields.Char(string='Abriviation', required=True)
     # details_machine = fields.One2many('detmachine', 'site_id')

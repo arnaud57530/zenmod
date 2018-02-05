@@ -61,6 +61,9 @@
         <menuitem id="menu_type_main" name="Moteurs" parent="menu_gmao_sub" sequence="59"/>
         <menuitem id="menu_type" name="Moteurs" parent="menu_type_main" sequence="59"
             action="act_open_type_view"/>
+             <menuitem id="menu_alternateur_main" name="alternateur" parent="menu_gmao_sub" sequence="69"/>
+        <menuitem id="menu_alternateur" name="alternateur" parent="menu_alternateur_main" sequence="69"
+            action="act_open_alternateur_view"/>
 
 
     </data>

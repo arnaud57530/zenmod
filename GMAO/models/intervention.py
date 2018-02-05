@@ -94,10 +94,7 @@ class Intervention(models.Model):
     def create(self, values):
         if values.get('name', '/') == '/':
             values['name'] = self.env['ir.sequence'].get('cmms.intervention')
-        rec = super(Intervention, self).create(values)
-        rec.equipment_id.compute_intervention_count()
-        return rec
-    
+        return super(Intervention, self).create(values)
 
     @api.multi
     def create_corrective(self):

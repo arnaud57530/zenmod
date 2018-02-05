@@ -48,6 +48,7 @@
              'view/produits.xml',
              'view/type_view.xml',
              'view/pieces_view.xml',
+             'view/alternateur_view.xml',
              'gmao_menu.xml',
              'data/gmao_sequence.xml',
              'data/gmao_demo.xml',

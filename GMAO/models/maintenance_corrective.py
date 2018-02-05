@@ -132,8 +132,7 @@ class Corrective(models.Model):
     @api.one
     def cloturer(self):
         state = self.state.search([], order='sequence desc', limit=1)
-        print "madate : ", datetime.datetime.now()
-        self.date_to  = datetime.datetime.strftime("%Y-%m-%d",datetime.datetime.now())
+        
         if state:
             self.state = state.id
             self.state_end = True
@@ -151,11 +150,20 @@ class Corrective(models.Model):
                 raise Warning(_(u"Vous ne pouvez pas supprimer un enregistrement dans l'état %s" % record.state.name))
         return super(Corrective, record).unlink()
 
+    @api.onchange('ref')
+    def _onchange_ref(self):
+        logging.warning(str(self.ref))
+        self._set_equipment_id()
+
+    @api.one
+    def _get_equipment_id(self):
+        self._set_equipment_id()
+
     ref_mnt_corr = fields.Char("Référence maintenance corrective", default='/',readonly=True)
     equipment_id = fields.Many2one('machine', 'Machine', required=True)
     panne = fields.Many2one('cause_panne', 'Panne?')
     date_from = fields.Date('Date Debut', )
-    date_to = fields.Date('Date Fin')
+    date_to = fields.Date('Date Cloture',)
     arret = fields.Boolean(string=u"machine à l'arrêt")
     number_of_days = fields.Float(string=u"Nombre de jour")
     note = fields.Text('Notes')

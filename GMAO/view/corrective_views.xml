@@ -70,6 +70,9 @@
                                     Date de début:
                                     <field name="date_from"/>
                                     <br/>
+                                    Date de début:
+                                    <field name="equipment_id"/>
+                                    <br/>
                                     Durée:
                                     <field name="number_of_days"/>
                                 </div>

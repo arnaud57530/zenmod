@@ -11,9 +11,9 @@
                     <filter domain="[('active','=', True)]" help="Activée" icon="terp-personal"/>
                     <filter domain="[('active','=', False)]" help="Désactivée" icon="terp-personal"/>
                     <group expand="0" string="Regrouper par">
+                        <filter string="Localisation" icon="terp-personal" context="{'group_by': 'local'}"/>
                         <filter string="Projet" icon="terp-personal" context="{'group_by': 'projet'}"/>
                         <filter string="Site" icon="terp-personal" context="{'group_by': 'site'}"/>
-                        <filter string="Localisation" icon="terp-personal" context="{'group_by': 'local'}"/>
                     </group>
                 </search>
             </field>
@@ -30,8 +30,9 @@
                     <field name="date_gar"/>
 
                     <field name="puissance"/>
-                    <field name="site"/>
                     <field name="local"/>
+                    <field name="projet"/>
+                    <field name="site"/>
                     <field name="active"/>
                     <field name="state" invisible="1"/>
                 </tree>
@@ -90,21 +91,23 @@
                         </div>
                         <group string="Information Général">
                             <group>
-                                <field name="active"/>
+                               <field name="active"/>
+                                <field name="num_contract"/>
                                 <field name="type"/>
-                                <field name='const'/>
+                                <field name="const"/>
                                 <field name="num_serie_un"/>
                                 <field name="num_serie_deux"/>
+                                <field name="alternateur"/>
+                                <field name="constr"/>
                                 <field name="num_serie_trois"/>
                                 <field name="puissance"/>
-                                <field name="client"/>
+                                 <field name="client"/>
                                 <field name="projet"/>
                                 <field name="site"/>
                                 <field name="local"/>
 
                             </group>
                             <group>
-
                                 <field name="meter" invisible="True"/>
                                 <field name="date_liv"/>
                                 <field name="date_ser"/>
