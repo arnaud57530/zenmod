@@ -52,7 +52,7 @@ class zen_implication_sales(models.Model):
 
     @api.onchange('zen_parner_id') 
     def _check_change(self):
-        print "mise a jour du partnair"
+        print "mise a jour du partner"
         self.zen_fonction = self.zen_parner_id.function
         self.zen_gsm = self.zen_parner_id.mobile
         self.zen_trigramme = self.zen_parner_id.trigram
@@ -135,9 +135,13 @@ class sale_order(models.Model):
 
     @api.onchange('zen_model_order') 
     def _check_change_model(self):
-        print "tata"
-        self.zen_contents = [(0,0,{'name' : 'toto'})] 
-
+        i = 3
+        res = []
+        for o in self.zen_model_order.chapter_ids:
+            i = i + 1 
+            res.append((0,0,{'name' : o.name,'zen_content' : o.zen_content, 'zen_number' : i, 'zen_model_chapter' : o.id }))
+        self.zen_contents = res  
+            
 
     @api.onchange('user_id') 
     def _check_change_salesperson(self):
