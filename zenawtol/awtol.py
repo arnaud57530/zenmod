@@ -89,10 +89,17 @@ class zen_chapter(models.Model):
     
     @api.onchange('zen_model_chapter') 
     def _check_change(self):
-        self.zen_content = self.zen_model_chapter.zen_content
+        self.zen_content = self._zenbuild(self.zen_model_chapter.zen_content)
         self.name = self.zen_model_chapter.zen_model_title
         self.tags = self.zen_model_chapter.zen_tags
 
+
+    def _zenbuild(self, mycontent):
+        awtol_partner_name = self.id_order.partner_id.name
+        res = ""
+        if mycontent:
+            res = mycontent.replace("awtol_partner_name", awtol_partner_name)
+        return res
 
 class zen_order_model4(models.Model):
     _name = 'zen.order.model4'
@@ -128,10 +135,14 @@ class sale_order(models.Model):
     
     zen_table_matiere = fields.Html('Tables de matiere')
     
-    zen_sales_text1 = fields.Html('Partie 1')
-    zen_sales_text2 = fields.Html('Partie 2')
-    
     zen_contents = fields.One2many('zen.chapter','id_order','Contenu')
+    
+    def _zenbuild(self, mycontent):
+        awtol_partner_name = self.partner_id.name
+        res = ""
+        if mycontent:
+            res = mycontent.replace("awtol_partner_name", awtol_partner_name)
+        return res
 
     @api.onchange('zen_model_order') 
     def _check_change_model(self):
@@ -139,7 +150,7 @@ class sale_order(models.Model):
         res = []
         for o in self.zen_model_order.chapter_ids:
             i = i + 1 
-            res.append((0,0,{'name' : o.name,'zen_content' : o.zen_content, 'zen_number' : i, 'zen_model_chapter' : o.id }))
+            res.append((0,0,{'name' : o.name,'zen_content' : self._zenbuild(o.zen_content), 'zen_number' : i, 'zen_model_chapter' : o.id }))
         self.zen_contents = res  
             
 
