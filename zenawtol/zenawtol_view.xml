@@ -296,27 +296,25 @@
    			</tr>
    			<tr><td style="border: 1px solid black" colspan="4">-</td></tr>
    			<tr><td style="border: 1px solid black" colspan="4">Responsible contact person</td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Name:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.name"/></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Name:</td><td style="border: 1px solid black" colspan="3"></td></tr>
    			<tr>
    				<td style="border: 1px solid black" colspan="4"></td>
    			</tr>
-   			<tr><td style="border: 1px solid black" width="20%">For the Client:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.parent_id.name"/></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Street 1 nr.:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.street"/></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Zipcode, city:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.zip"/>-<span t-field="docs[0].partner_id.city"/></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Country:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.country_id.name"/></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Phone:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.phone"/></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">E-mail:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.email"/></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">VAT nr:</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].partner_id.parent_id.vat"/></td></tr>
-   			
-   		
+   			<tr><td style="border: 1px solid black" width="20%">For the Client:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Street 1 nr.:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Zipcode, city:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Country:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Phone:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">E-mail:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">VAT nr:</td><td style="border: 1px solid black" colspan="3"></td></tr>
    		</table>
    		
    		<br/>
    		<br/>
    		<table width="100%">
    			<tr><td style="border: 1px solid black;text-align:center;background-color:orange;" colspan="4">For agreement</td></tr>
-   			<tr><td style="border: 1px solid black">Responsable's name</td><td style="border: 1px solid black"><span t-field="docs[0].partner_id.name"/></td><td colspan="2" style="border: 1px solid black">Signature:<br/><br/><br/><br/></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Title / Function<br/></td><td  width="35%" style="border: 1px solid black"><span t-field="docs[0].partner_id.function"/></td><td style="border: 1px solid black"  width="15%">Date</td><td style="border: 1px solid black"></td></tr>
+   			<tr><td style="border: 1px solid black">Responsable's name</td><td style="border: 1px solid black"></td><td colspan="2" style="border: 1px solid black">Signature:<br/><br/><br/><br/></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%">Title / Function<br/></td><td  width="35%" style="border: 1px solid black"></td><td style="border: 1px solid black"  width="15%">Date</td><td style="border: 1px solid black"></td></tr>
    		
    		</table>
    </template>
