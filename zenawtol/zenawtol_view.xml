@@ -92,6 +92,7 @@
     				<field name="zen_tags"/>
     				<field name="display_order"/>
     				<field name="display_contract"/>
+    				<field name="page_break"/>
         		  </group>
         		</form>
         	</field>
@@ -150,6 +151,7 @@
 	           	  	<group string = "Page 1">
 	           	  	  <field name="zen_model_order"/>
 	           	  	  <field name="zen_document_type"/>
+	           	  	  <field name="zen_document_name"/>
 	           	  	  <field name="partner_id" on_change="onchange_partner_id(partner_id, context)" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options="{&quot;always_reload&quot;: True}"/>
 		           	  <field name="date_order"/>
 		           	  <field name="zen_object"/>
@@ -244,24 +246,39 @@
     
     
        <template id="sale_order_page_personne_impliquee">
+       			<style type="text/css">
+                         td   {padding: 5;}
+                </style>
     		<h3>2 - Personnes impliquées dans le projet</h3>
     		   <h4>Client</h4>
     		   <table width="100%">
-    		   		<tr><td width="20%">Nom</td><td width="20%">Societe</td><td>Fonction</td><td>GSM</td></tr>
+    		   		<tr><td width="20%">Prénom + Nom</td><td width="20%">Societe</td><td>E-mail</td><td>GSM</td></tr>
     				<p t-foreach="docs[0].zen_implications" t-as="o">
 	    				 <t t-if="not(o.is_supplier)">
-				    		<tr><td width="20%" style="border: 1px solid black" colspan="2"><span t-field="o.zen_parner_id.name"/><br/>Mail : <span t-field="o.zen_mail"/></td><td width="20%" style="border: 1px solid black" colspan="2"><span t-field="o.zen_societe.name"/></td><td style="border: 1px solid black" colspan="2"><span t-field="o.zen_fonction"/></td><td style="border: 1px solid black" colspan="2"><span t-field="o.zen_gsm"/></td></tr>
-				    	 </t>
+				    		<tr>
+				    			<td width="20%" style="border: 1px solid black" ><span t-field="o.zen_parner_id.name"/><br/>Trigramme : <span t-field="o.zen_trigramme"/></td>
+				    			
+				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_societe.name"/><br/><span t-field="o.zen_fonction"/></td>
+				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_mail"/></td>
+				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_gsm"/></td>
+				    		</tr>
+				    	</t>
 				    </p>
 	    	  	</table>
 	    	  	<br/>
 	    	  	<h4>Fournisseur</h4>
     		    <table width="100%">
-    		   		<tr><td width="20%">Nom</td><td width="20%">Societe</td><td>Fonction</td><td>GSM</td></tr>
+    		   		<tr><td width="20%">Prénom + Nom</td><td width="20%">Societe</td><td>E-mail</td><td>GSM</td></tr>
     				<p t-foreach="docs[0].zen_implications" t-as="o">
 	    				 <t t-if="o.is_supplier">
-				    		<tr><td width="20%" style="border: 1px solid black" colspan="2"><span t-field="o.zen_parner_id.name"/><br/>Mail : <span t-field="o.zen_mail"/></td><td width="20%" style="border: 1px solid black" colspan="2"><span t-field="o.zen_societe.name"/></td><td style="border: 1px solid black" colspan="2"><span t-field="o.zen_fonction"/></td><td style="border: 1px solid black" colspan="2"><span t-field="o.zen_gsm"/></td></tr>
-				    	 </t>
+				    		<tr>
+				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_parner_id.name"/><br/>Trigramme : <span t-field="o.zen_trigramme"/></td>
+				    			
+				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_societe.name"/><br/><span t-field="o.zen_fonction"/></td>
+				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_mail"/></td>
+				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_gsm"/></td>
+				    		</tr>
+				    	</t>
 				    </p>
 	    	  	 </table>	
     		<p style="page-break-before:always;"> </p> 
@@ -282,39 +299,39 @@
    <template id="sale_order_display_contract">
    		<table width="100%">
    			<tr>
-   				<td style="border: 1px solid black;text-align:center;background-color:orange;" colspan="4">Client's invoicing data</td>
+   				<td style="border: 1px solid black;text-align:center;background-color:orange;" colspan="4" height="30">Client's invoicing data</td>
    			</tr>
    			<tr>
    				<td style="border: 1px solid black" colspan="2" rowspan="2">RFP, RFI or quote request<br/>ref.nr.:<br/>or other reference</td>
-   				<td  style="border: 1px solid black" colspan="2"><span t-field="docs[0].client_order_ref"/></td>
+   				<td  style="border: 1px solid black" colspan="2" height="30"><span t-field="docs[0].client_order_ref"/></td>
    			</tr>
    			<tr>
    				<td style="border: 1px solid black"></td>
    			</tr>
    			<tr>
-   				<td style="border: 1px solid black" colspan="2">Proposal Price</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].amount_total"/>€</td>
+   				<td style="border: 1px solid black" colspan="2" height="30">Proposal Price</td><td style="border: 1px solid black" colspan="3"><span t-field="docs[0].amount_total"/>€</td>
    			</tr>
-   			<tr><td style="border: 1px solid black" colspan="4">-</td></tr>
-   			<tr><td style="border: 1px solid black" colspan="4">Responsible contact person</td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Name:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" colspan="4" height="30"></td></tr>
+   			<tr><td style="border: 1px solid black" colspan="4" height="30">Responsible contact person</td></tr>
+   			<tr><td style="border: 1px solid black" width="20%" height="30">Name:</td><td style="border: 1px solid black" colspan="3"></td></tr>
    			<tr>
-   				<td style="border: 1px solid black" colspan="4"></td>
+   				<td style="border: 1px solid black" colspan="4" height="30"></td>
    			</tr>
-   			<tr><td style="border: 1px solid black" width="20%">For the Client:</td><td style="border: 1px solid black" colspan="3"></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Street 1 nr.:</td><td style="border: 1px solid black" colspan="3"></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Zipcode, city:</td><td style="border: 1px solid black" colspan="3"></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Country:</td><td style="border: 1px solid black" colspan="3"></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Phone:</td><td style="border: 1px solid black" colspan="3"></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">E-mail:</td><td style="border: 1px solid black" colspan="3"></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">VAT nr:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%" height="30">For the Client:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%" height="30">Street 1 nr.:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%" height="30">Zipcode, city:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%" height="30">Country:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%" height="30">Phone:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%" height="30">E-mail:</td><td style="border: 1px solid black" colspan="3"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%" height="30">VAT nr:</td><td style="border: 1px solid black" colspan="3"></td></tr>
    		</table>
    		
    		<br/>
    		<br/>
    		<table width="100%">
-   			<tr><td style="border: 1px solid black;text-align:center;background-color:orange;" colspan="4">For agreement</td></tr>
+   			<tr><td style="border: 1px solid black;text-align:center;background-color:orange;" colspan="4" height="30">For agreement</td></tr>
    			<tr><td style="border: 1px solid black">Responsable's name</td><td style="border: 1px solid black"></td><td colspan="2" style="border: 1px solid black">Signature:<br/><br/><br/><br/></td></tr>
-   			<tr><td style="border: 1px solid black" width="20%">Title / Function<br/></td><td  width="35%" style="border: 1px solid black"></td><td style="border: 1px solid black"  width="15%">Date</td><td style="border: 1px solid black"></td></tr>
+   			<tr><td style="border: 1px solid black" width="20%" height="30">Title / Function<br/></td><td  width="35%" style="border: 1px solid black"></td><td style="border: 1px solid black"  width="15%">Date</td><td style="border: 1px solid black"></td></tr>
    		
    		</table>
    </template>
@@ -422,24 +439,21 @@
     
     <template id="sale_order_page3">
     	<p t-foreach="docs[0].zen_contents" t-as="o">
-    	<t t-if="o.display_order or o.display_contract">
+    	<t t-if="o.page_break">
     		<p style="page-break-before:always;"> </p>
     	</t>
     		<h3><span t-field="o.zen_number"/> - <span t-field="o.name"/></h3>
     		<br/>
+
+    		<span t-field="o.zen_content"/>
     		<t t-if="o.display_order">
+    		<p style="page-break-before:always;"> </p> 
     			<t t-call="zenawtol.sale_order_display_order"/>
     		</t>
-    		<span t-field="o.zen_content"/>
     		<br/>
-
     		<t t-if="o.display_contract">
     			<t t-call="zenawtol.sale_order_display_contract"/>
     		</t>
-    		
-    	 <t t-if="o.display_contract">
-    		<p style="page-break-before:always;"> </p>
-    	</t>
     	</p>	
     </template>
     
@@ -538,11 +552,11 @@
     <template id="sale_order_header">
     	<div class="header">
     		<table width="100%">
-    				<tr><td><b>Client : <span t-field="docs[0].partner_id"/></b></td>							<td align="right">AWTOL S.a.r.l.</td></tr>
-    				<tr><td>Document : </td>																	<td align="right">Rue du commerce</td></tr>
-    				<tr><td>AWTOL S.a.r.l Proprietary and Confidentuial 2017</td>								<td align="right">L-3895 FOETZ</td></tr>
-    				<tr><td style="color:red;"><span t-field="docs[0].zen_document_type"/></td>																	<td align="right">Luxembourg</td></tr>
-    				<tr><td style="border-bottom: 1px solid black"></td>										<td style="border-bottom: 1px solid black" align="right">VAT: LU29010453</td></tr>
+    				<tr><td><b>Client : <span t-field="docs[0].partner_id"/></b></td>							<td style="font-size:14px" align="right">AWTOL S.a.r.l.</td></tr>
+    				<tr><td style="font-size:10px">Document : <span t-field="docs[0].zen_document_name"/></td>																	<td style="font-size:12px" align="right">Rue du commerce</td></tr>
+    				<tr><td style="font-size:10px">AWTOL S.a.r.l Proprietary and Confidentuial 2018</td>								<td align="right" style="font-size:12px">L-3895 FOETZ</td></tr>
+    				<tr><td style=""></td>																	<td align="right" style="font-size:12px">Luxembourg</td></tr>
+    				<tr><td style="border-bottom: 1px solid black;color:red;font-size:12px"><span t-field="docs[0].zen_document_type"/></td>										<td style="border-bottom: 1px solid black; font-size:12px" align="right">VAT: LU29010453</td></tr>
     		</table>
     		
     	</div>
@@ -554,7 +568,7 @@
 	    		<tr>
 	    			<td><img src='/zenawtol/static/src/img/LOGO.png' style="max-height: 30px;"/></td>
 	    			<td style="margin:10px 0px 0px;vertical-align:top;text-align:center;padding:0px;font-family:arial;font-size:10px;color:rgb(51,51,51)">R.C.S Luxembourg n°B210701 - TVA (VAT) LU 29010453 - Business Licences: 10075510 / 0 <br/> Banque:BIL LU61 0022 4101 4327 5600 - Code SWIFT/BIC : BILLLULL</td>
-	    			<td>Page:<span class="page"/>/<span class="topage"/></td>
+	    			<td>Page : <span class="page"/>/<span class="topage"/></td>
 	    		</tr>
 	    	
 	    	</table>

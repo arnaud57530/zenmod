@@ -84,6 +84,7 @@ class zen_chapter(models.Model):
     id_order = fields.Many2one('sale.order', 'Order')
     display_order = fields.Boolean('Display Lines Order')
     display_contract = fields.Boolean('Display Contract')
+    page_break = fields.Boolean('Page break')
     
     _order = 'zen_number'
     
@@ -110,13 +111,14 @@ class zen_order_model4(models.Model):
 class sale_order_line(models.Model):
     _inherit = 'sale.order.line'
     
-    identifier = fields.Char('Line Ref')
+    identifier = fields.Char('Item nr')
 
 
 class sale_order(models.Model):
     _inherit = 'sale.order'
     
     zen_document_type = fields.Many2one('zen.document_type', 'Document type')
+    zen_document_name = fields.Char('Document Name')
     zen_model_order = fields.Many2one('zen.order.model4','Order Model')
     zen_object = fields.Char('Objet')
     zen_ourref = fields.Char('Notre ref')
