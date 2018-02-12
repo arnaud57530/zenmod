@@ -344,8 +344,8 @@
 							<td></td>
 							<td colspan="4"><b><span t-esc="code_tax"/></b></td>
 							<td><b>Total</b></td>
-							<td><b><span t-esc="'{0:,.2f}'.format(int(sumcre))"/></b></td>
-							<td><b><span t-esc="'{0:,.2f}'.format(int(sumdeb))"/></b></td>
+							<td><b><span t-esc="'{0:,.2f}'.format(sumcre)"/></b></td>
+							<td><b><span t-esc="'{0:,.2f}'.format(sumdeb)"/></b></td>
 						</tr>
 						<t t-set="sumdeb" t-value="o.sumdebit"/>
 						<t t-set="sumcre" t-value="o.sumcredit"/>
@@ -368,16 +368,16 @@
 					<td></td>
 					<td colspan="4"><b><span t-esc="code_tax"/></b></td>
 					<td><b>Total</b></td>
-					<td><b><span t-esc="'{0:,.2f}'.format(int(sumcre))"/></b></td>
-					<td><b><span t-esc="'{0:,.2f}'.format(int(sumdeb))"/></b></td>
+					<td><b><span t-esc="'{0:,.2f}'.format(sumcre)"/></b></td>
+					<td><b><span t-esc="'{0:,.2f}'.format(sumdeb)"/></b></td>
 				</tr>
 				<tr>
 					<td></td>
 					<td></td>
 					<td></td>
 					<td colspan="4"><b>TOTAL</b></td>
-					<td><b><span t-esc="'{0:,.2f}'.format(int(sumcre_tot))"/></b></td>
-					<td><b><span t-esc="'{0:,.2f}'.format(int(sumdeb_tot))"/></b></td>
+					<td><b><span t-esc="'{0:,.2f}'.format(sumcre_tot)"/></b></td>
+					<td><b><span t-esc="'{0:,.2f}'.format(sumdeb_tot)"/></b></td>
 				</tr>
 				
 			</tbody>
@@ -385,6 +385,12 @@
 	    </div>
 	    </t>
 	</template>
+	
+	
+	
+
+	
+	
 </data>
 </openerp>
 
