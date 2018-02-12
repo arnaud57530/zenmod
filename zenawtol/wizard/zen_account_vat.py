@@ -26,8 +26,8 @@ class report_tax_return_by_account(osv.osv):
     _auto = False
     _columns = {
                 'id' : fields.integer('id'),
-                'ref' : fields.char('ref'),
-                'mydate' : fields.date('mydate'),
+                #'ref' : fields.char('ref'),
+                #'mydate' : fields.date('mydate'),
                 'code' : fields.char('code'),
                 'name' : fields.char('name'),
                 'tax' : fields.char('tax'),
@@ -39,21 +39,23 @@ class report_tax_return_by_account(osv.osv):
 
                 
                 }
-    _order = 'name,mydate'
+    _order = 'code'
 
     def init(self, cr):
         tools.drop_view_if_exists(cr, 'zenawtol_reporttax')
         cr.execute("""
         CREATE OR REPLACE VIEW zenawtol_reporttax AS
-            SELECT  account_move_line.id, 
-                account_move_line.ref, 
-                account_move_line.date as mydate, 
+            SELECT  
+                --account_move_line.id, 
+                --account_move_line.ref, 
+                --account_move_line.date as mydate,
+                account_account.id as id, 
                 account_account.code as code, 
                 account_account.name as name, 
                 account_tax_code.name as tax, 
-                account_move_line.tax_amount,
-                account_move_line2.debit,
-                account_move_line2.credit,
+                sum(account_move_line.tax_amount) as tax_amount,
+                sum(account_move_line2.debit) as debit,
+                sum(account_move_line2.credit) as credit,
                 account_period.fiscalyear_id,
                 account_tax_code.id as chart_tax_id
                 --, tax.debit, tax.credit 
@@ -70,7 +72,7 @@ class report_tax_return_by_account(osv.osv):
                 and account_tax.base_code_id = account_move_line.tax_code_id
                 AND account_move_line2.move_id = account_move_line.move_id
                 AND account_move_line2.tax_code_id = account_tax.tax_code_id
-            ORDER BY code
+            GROUP BY account_account.id, account_account.code, account_account.name, tax, account_period.fiscalyear_id, chart_tax_id
         """)
 
 
@@ -84,18 +86,12 @@ class zen_account_vat_declaration(osv.osv_memory):
         'based_on': fields.selection([('invoices', 'Invoices'),
                                       ('payments', 'Payments'),],
                                       'Based on', required=True),
-        'chart_tax_id': fields.many2one('account.tax.code', 'Chart of Tax', help='Select Charts of Taxes', required=False, domain = [('parent_id','=', False)]),
+        'chart_tax_id': fields.many2one('account.tax.code', 'Chart of Tax', help='Select Charts of Taxes', required=False, domain = []),
         'display_detail': fields.boolean('Display Detail'),
     }
 
-    def _get_tax(self, cr, uid, context=None):
-        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-        taxes = self.pool.get('account.tax.code').search(cr, uid, [('parent_id', '=', False), ('company_id', '=', user.company_id.id)], limit=1)
-        return taxes and taxes[0] or False
-
     _defaults = {
         'based_on': 'invoices',
-        'chart_tax_id': _get_tax
     }
 
     def create_vat(self, cr, uid, ids, context=None):
