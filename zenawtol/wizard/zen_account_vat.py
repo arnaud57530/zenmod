@@ -72,7 +72,9 @@ class report_tax_return_by_account(osv.osv):
                 and account_tax.base_code_id = account_move_line.tax_code_id
                 AND account_move_line2.move_id = account_move_line.move_id
                 AND account_move_line2.tax_code_id = account_tax.tax_code_id
-            GROUP BY account_account.id, account_account.code, account_account.name, tax, account_period.fiscalyear_id, chart_tax_id
+                AND account_move_line.period_id = account_period.id
+            GROUP BY account_account.id, account_account.code, account_account.name, tax, account_period.fiscalyear_id, chart_tax_id 
+            ORDER BY account_account.code
         """)
 
 
@@ -108,12 +110,14 @@ class zen_account_vat_declaration(osv.osv_memory):
             domain.append(('fiscalyear_id','=',datas['form']['fiscalyear_id']))
         if datas['form']['chart_tax_id']:
             domain.append(('chart_tax_id','=',datas['form']['chart_tax_id']))
-        print "ARGARGARG domain ", domain
-        taxcode_ids = self.pool.get('zenawtol.reporttax').search(cr,uid,domain)
-        print "argargarg : ids ", taxcode_ids
+        
+        taxcode_ids = self.pool.get('zenawtol.reporttax').search(cr,uid,domain, context=context)
         datas['ids'] = taxcode_ids
-        A = self.pool.get('zenawtol.reporttax').read(cr,uid,taxcode_ids)
-        print "argargarg obj)", A
+        print "domain : ", domain, taxcode_ids
+        A = self.pool.get('zenawtol.reporttax').read(cr,uid,taxcode_ids, context=context)
+        print "ARGARGARGARG", A
         datas['form']['zenvatlines'] = self.pool.get('zenawtol.reporttax').read(cr,uid,taxcode_ids, context=context)
-
         return self.pool['report'].get_action(cr, uid, [], 'zenawtol.zen_report_vat3', data=datas, context=context)
+    
+    
+    

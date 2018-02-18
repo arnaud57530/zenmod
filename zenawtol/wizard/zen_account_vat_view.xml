@@ -79,6 +79,15 @@
 								<t t-set="sumbase_tot" t-value="sumbase_tot+ligne['tax_amount']"/>
 	                        </tr>        
 	                    </tbody>
+	                    	        <tr>
+	                        			<td class="text-right" style="font-weight: bold;">Total compte</td>
+	                    				<td class="text-right" style="font-weight: bold;"><span t-esc="compte"/></td>
+	                    				<td class="text-center" style="font-weight: bold;"><span t-esc="'{0:,.2f}'.format(sumbase)"/></td>
+	                    				<td class="text-center" style="font-weight: bold;"><span t-esc="'{0:,.2f}'.format(sumdeb)"/></td>
+	                    				<td class="text-center" style="font-weight: bold;"><span t-esc="'{0:,.2f}'.format(sumcre)"/></td>
+	                        		</tr>
+	                    
+	                    
 	                    	<tr>
 	                    		<td></td>
 	                    		<td style="font-weight: bold;">TOTAL</td>
