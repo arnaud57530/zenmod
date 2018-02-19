@@ -71,13 +71,31 @@
                     <field name="name"/>
         			<field name="zen_model_title"/>
         			<field name="zen_content"/>
-    				<field name="zen_tags"/>
     				<field name="zen_sequence"/>
     				<field name="display_order"/>
     				<field name="display_contract"/>
 					<field name="page_break"/>
+					<field name="model_order"/>
         		  </group>
         		</form>
+        	</field>
+        </record>
+	
+	
+		<record id="view_zen_model_chapter_tree" model="ir.ui.view">
+            <field name="name">zen.model.chapter.tree</field>
+            <field name="model">zen.model.chapter</field>
+            <field name="arch" type="xml">
+                <tree string="Description">
+                    <field name="name"/>
+        			<field name="zen_model_title"/>
+        			<field name="zen_content"/>
+    				<field name="zen_sequence"/>
+    				<field name="display_order"/>
+    				<field name="display_contract"/>
+					<field name="page_break"/>
+					<field name="model_order"/>
+        		</tree>
         	</field>
         </record>
 	
@@ -230,7 +248,7 @@
     	<div class="page">
     	<h2>Page 1</h2>
 		
-		<p style="page-break-before:always;"> </p> 
+		<p style="page-break-before:always;"> </p>  	base.menu_sales
 		<h2>Page 2</h2>
     	</div>
 	</template>
@@ -578,8 +596,40 @@
 	    	</table>
     	</div>
     </template>
-    
 
+
+        <record model="ir.actions.act_window" id="action_chapter_model">
+            <field name="name">Chapter Model</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zen.model.chapter</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+	      
+	      
+	    <record model="ir.actions.act_window" id="action_action_order_model">
+            <field name="name">Sales Order Model</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zen.order.model4</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+	          
+    
+    <menuitem
+	        sequence="200"
+	        parent="base.menu_sales"
+	        id="menu_action_chapter_model"
+	        action="action_chapter_model"/>
+	<menuitem
+	        sequence="250"
+	        parent="base.menu_sales"
+	        id="menu_action_order_model"
+	        action="action_action_order_model"/>
 </data>
 </openerp>
 

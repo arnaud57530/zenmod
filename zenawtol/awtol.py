@@ -74,6 +74,7 @@ class zen_model_chapter(models.Model):
     display_order = fields.Boolean('Display Lines Order')
     display_contract = fields.Boolean('Display Contract')
     page_break = fields.Boolean('Page break')
+    model_order = fields.Many2many('zen.order.model4','zen_order_model3','id_model', 'id_order', string='Order Model')
     #models_ids = fields.Many2many('zen.order.model','zen_order_model2','id_model','id_order', string='Order Model')
 
 
