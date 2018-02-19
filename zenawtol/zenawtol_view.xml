@@ -73,6 +73,9 @@
         			<field name="zen_content"/>
     				<field name="zen_tags"/>
     				<field name="zen_sequence"/>
+    				<field name="display_order"/>
+    				<field name="display_contract"/>
+					<field name="page_break"/>
         		  </group>
         		</form>
         	</field>
@@ -199,8 +202,10 @@
     				  			<field name="zen_content"/>
     				  			<field name="zen_model_chapter"/>
     				  			<field name="zen_tags"/>
-    				  			
-		           	  		</tree>
+    				  			<field name="display_order"/>
+    							<field name="display_contract"/>
+								<field name="page_break"/>
+    				  		</tree>
 		           	  	</field>
 		           	  </group>
 		           </page>
@@ -258,7 +263,7 @@
 				    		<tr>
 				    			<td width="20%" style="border: 1px solid black" ><span t-field="o.zen_parner_id.name"/><br/>Trigramme : <span t-field="o.zen_trigramme"/></td>
 				    			
-				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_societe.name"/><br/><span t-field="o.zen_fonction"/></td>
+				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_societe.name"/><br/>Fonction : <span t-field="o.zen_fonction"/></td>
 				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_mail"/></td>
 				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_gsm"/></td>
 				    		</tr>
@@ -274,7 +279,7 @@
 				    		<tr>
 				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_parner_id.name"/><br/>Trigramme : <span t-field="o.zen_trigramme"/></td>
 				    			
-				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_societe.name"/><br/><span t-field="o.zen_fonction"/></td>
+				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_societe.name"/><br/>Fonction :<span t-field="o.zen_fonction"/></td>
 				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_mail"/></td>
 				    			<td width="20%" style="border: 1px solid black"><span t-field="o.zen_gsm"/></td>
 				    		</tr>
@@ -297,6 +302,7 @@
    </template>
    
    <template id="sale_order_display_contract">
+  	 <p style="page-break-before:always;"> </p> 
    		<table width="100%">
    			<tr>
    				<td style="border: 1px solid black;text-align:center;background-color:orange;" colspan="4" height="30">Client's invoicing data</td>
@@ -334,6 +340,7 @@
    			<tr><td style="border: 1px solid black" width="20%" height="30">Title / Function<br/></td><td  width="35%" style="border: 1px solid black"></td><td style="border: 1px solid black"  width="15%">Date</td><td style="border: 1px solid black"></td></tr>
    		
    		</table>
+   		<p style="page-break-before:always;"> </p> 
    </template>
     
     <template id="sale_order_display_order">
@@ -342,37 +349,35 @@
                      <tr>
                      	<th>Line Ref</th>
                          <th>Description</th>
-                         <th>Taxes</th>
                          <th class="text-right">Quantity</th>
                          <th class="text-right">Unit Price</th>
                          <th groups="sale.group_discount_per_so_line">Disc.(%)</th>
                          <th class="text-right">Price</th>
                      </tr>
                 </thead>
+                <t t-set="mytax" t-value="'No Lines'"/>
                 <t t-foreach="docs[0].sale_layout_lines(order_id = docs[0].id)" t-as="p">
+                	 <t t-set="mytax" t-value="p['lines'][0].tax_id.name"/>
                      <!-- Name of the category -->
                      <t t-call="sale_layout.category_template"/>
                      <!-- Lines associated -->
                      <t t-foreach="p['lines']" t-as="l">
                          <tr>
-                         	<td><span t-field="l.identifier"/></td>
-                             <td>
+                         	<td style="font-size:10px;"><span t-field="l.identifier"/></td>
+                             <td style="font-size:10px;">
                                 <span t-field="l.name"/>
                              </td>
-                             <td>
-                                 <span t-esc="', '.join(map(lambda x: x.name, l.tax_id))"/>
-                             </td>
-                             <td class="text-right">
+                             <td class="text-right" style="font-size:10px;">
                                  <span t-field="l.product_uom_qty"/>
                                  <span groups="product.group_uom" t-field="l.product_uom"/>
                              </td>
-                             <td class="text-right">
+                             <td class="text-right" style="font-size:10px;">
                                  <span t-field="l.price_unit"/>
                              </td>
-                             <td groups="sale.group_discount_per_so_line">
+                             <td groups="sale.group_discount_per_so_line" style="font-size:10px;">
                                  <span t-field="l.discount"/>
                              </td>
-                             <td class="text-right">
+                             <td class="text-right" style="font-size:10px;">
                                  <span t-field="l.price_subtotal"/> €
                              </td>
                          </tr>
@@ -395,7 +400,6 @@
                              <thead>
                                  <tr>
 									<th>Description</th>
-                                     <th>Taxes</th>
                                      <th class="text-right">Quantity</th>
                                      <th class="text-right">Unit Price</th>
                                      <th groups="sale.group_discount_per_so_line">Disc.(%)</th>
@@ -420,7 +424,7 @@
                              </td>
                          </tr>
                          <tr>
-                             <td>Taxes</td>
+                             <td><span t-esc="mytax"/></td>
                              <td class="text-right">
                                  <span t-field="docs[0].amount_tax"/>€
                              </td>
@@ -439,15 +443,15 @@
     
     <template id="sale_order_page3">
     	<p t-foreach="docs[0].zen_contents" t-as="o">
-    	<t t-if="o.page_break">
-    		<p style="page-break-before:always;"> </p>
-    	</t>
+	    	<t t-if="o.page_break">
+	    		<p style="page-break-before:always;"> </p>
+	    	</t>
     		<h3><span t-field="o.zen_number"/> - <span t-field="o.name"/></h3>
     		<br/>
 
     		<span t-field="o.zen_content"/>
     		<t t-if="o.display_order">
-    		<p style="page-break-before:always;"> </p> 
+    			<p style="page-break-before:always;"> </p> 
     			<t t-call="zenawtol.sale_order_display_order"/>
     		</t>
     		<br/>

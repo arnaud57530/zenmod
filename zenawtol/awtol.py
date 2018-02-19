@@ -71,6 +71,9 @@ class zen_model_chapter(models.Model):
     zen_content = fields.Html('Content')
     zen_sequence = fields.Integer('Sequence')
     zen_tags = fields.Many2many('zen.tag.contract','zen_tag_contract_model_chapter',string= 'Tags')
+    display_order = fields.Boolean('Display Lines Order')
+    display_contract = fields.Boolean('Display Contract')
+    page_break = fields.Boolean('Page break')
     #models_ids = fields.Many2many('zen.order.model','zen_order_model2','id_model','id_order', string='Order Model')
 
 
@@ -93,6 +96,9 @@ class zen_chapter(models.Model):
         self.zen_content = self._zenbuild(self.zen_model_chapter.zen_content)
         self.name = self.zen_model_chapter.zen_model_title
         self.tags = self.zen_model_chapter.zen_tags
+        self.display_order = self.zen_model_chapter.display_order
+        self.display_contract = self.zen_model_chapter.display_contract
+        self.page_break = self.zen_model_chapter.page_break
 
 
     def _zenbuild(self, mycontent):
