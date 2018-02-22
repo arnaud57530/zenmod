@@ -217,7 +217,6 @@
 		           	  		<tree>
 		           	  			<field name="name"/>
     				  			<field name="zen_number"/>
-    				  			<field name="zen_content"/>
     				  			<field name="zen_model_chapter"/>
     				  			<field name="zen_tags"/>
     				  			<field name="display_order"/>
@@ -448,7 +447,7 @@
                              </td>
                          </tr>
                          <tr class="border-black">
-							<td><strong>Total</strong></td>
+							<td><strong>Total TTC</strong></td>
                              <td class="text-right">
                                  <span t-field="docs[0].amount_total"/>€
                              </td>
@@ -469,7 +468,7 @@
 
     		<span t-field="o.zen_content"/>
     		<t t-if="o.display_order">
-    			<p style="page-break-before:always;"> </p> 
+    			
     			<t t-call="zenawtol.sale_order_display_order"/>
     		</t>
     		<br/>
