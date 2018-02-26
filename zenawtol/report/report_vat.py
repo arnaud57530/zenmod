@@ -132,10 +132,10 @@ class tax_report(report_sxw.rml_parse, common_report_header):
                             account_move_line.date, \
                             account_account.code as account_code, \
                             account_account.name as account_name, \
-                            account_tax_code.name, \
-                            account_move_line.tax_amount, \
-                            account_move_line2.debit, \
-                            account_move_line2.credit \
+                            account_tax_code.name as tax, \
+                            sum(account_move_line.tax_amount) as tax_amount, \
+                            sum(account_move_line2.debit) as debit, \
+                            sum(account_move_line2.credit) as credit \
                         FROM account_move_line, \
                             account_tax_code, \
                             account_tax, \
@@ -150,15 +150,17 @@ class tax_report(report_sxw.rml_parse, common_report_header):
                             AND account_move_line2.move_id = account_move_line.move_id \
                             AND account_move_line2.tax_code_id = account_tax.tax_code_id \
                             AND account_period.fiscalyear_id = %s \
+                            and  account_move_line.account_id = 598 \
+                        GROUP BY account_account.id, account_account.code, account_account.name, tax, \
                         ORDER BY account_code", (fiscalyear_id,))
-
         res = self.cr.dictfetchall()
+        print "ARGARGARG 3333 " , res
         
         i = 0
         while i<len(res):
             res[i]['account'] = obj_account.browse(self.cr, self.uid, res[i]['account_id'], context=context)
             i+=1
-        print res
+        print "ARGARGARG 22222" , res
         return res
 
     def _get_codes(self, based_on, company_id, parent=False, level=0, period_list=None, context=None):

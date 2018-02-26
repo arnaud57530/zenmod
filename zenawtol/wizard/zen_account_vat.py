@@ -49,7 +49,7 @@ class report_tax_return_by_account(osv.osv):
                 --account_move_line.id, 
                 --account_move_line.ref, 
                 --account_move_line.date as mydate,
-                account_account.id as id, 
+                account_account.id * 100000 + account_tax_code.id +  account_period.fiscalyear_id * 100000000000 as id, 
                 account_account.code as code, 
                 account_account.name as name, 
                 account_tax_code.name as tax, 
@@ -67,12 +67,13 @@ class report_tax_return_by_account(osv.osv):
                 account_period 
             WHERE account_tax_code.id = account_move_line.tax_code_id
                 AND account_move_line.tax_code_id > 0
-                AND account_tax_code.name ilike 'Base%'
+                AND account_tax_code.name ilike '%Base%'
                 AND account_account.id = account_move_line.account_id
                 and account_tax.base_code_id = account_move_line.tax_code_id
                 AND account_move_line2.move_id = account_move_line.move_id
                 AND account_move_line2.tax_code_id = account_tax.tax_code_id
                 AND account_move_line.period_id = account_period.id
+                 
             GROUP BY account_account.id, account_account.code, account_account.name, tax, account_period.fiscalyear_id, chart_tax_id 
             ORDER BY account_account.code
         """)
@@ -115,7 +116,7 @@ class zen_account_vat_declaration(osv.osv_memory):
         datas['ids'] = taxcode_ids
         print "domain : ", domain, taxcode_ids
         A = self.pool.get('zenawtol.reporttax').read(cr,uid,taxcode_ids, context=context)
-        print "ARGARGARGARG", A
+        print "ARGARGARGARG 11111", A
         datas['form']['zenvatlines'] = self.pool.get('zenawtol.reporttax').read(cr,uid,taxcode_ids, context=context)
         return self.pool['report'].get_action(cr, uid, [], 'zenawtol.zen_report_vat3', data=datas, context=context)
     
