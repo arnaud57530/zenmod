@@ -51,11 +51,13 @@ class budget_report(report_sxw.rml_parse):
             'perc':0.00
         }
         result = []
-
+        print "argarg2", object.id 
         budgets = self.pool.get('crossovered.budget').browse(self.cr, self.uid, [object.id], self.context.copy())
+        print "argarg", budgets
         c_b_lines_obj = self.pool.get('crossovered.budget.lines')
         acc_analytic_obj = self.pool.get('account.analytic.account')
         for budget_id in budgets:
+            print "argarg4", budget_id
             res = {}
             budget_lines = []
             budget_ids = []

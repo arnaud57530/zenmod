@@ -17,7 +17,7 @@
             Consolidation du Budget
         """,
     'author': 'CIERIA',
-    'depends': ['account', 'report'],
+    'depends': ['account', 'report','account_budget'],
     'data': [
         'security/ir.model.access.csv',
         'security/account_budget_security.xml',
