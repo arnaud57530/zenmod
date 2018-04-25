@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <report
+            id="zenbudget_reports.rep_crossovered"
+            model="easy.crossovered.report.datas"
+            report_type="qweb-pdf"
+            string="Budjets"
+            name="zenbudget_reports.rep_crossovered"
+            file="zenbudget_reports.easy_crossovered2"
+        />
+        
+      <template id="easy_crossovered2">
+	    <t t-call="report.html_container">
+	        <t t-call="report.internal_layout">
+	            <div class="page">
+	                <h2>Awtol Tax Statement</h2>
+	
+	                <!-- 
+	                <div class="row mt32 mb32">
+	                    <div class="col-xs-3">
+	                        <strong>Chart of Tax:</strong>
+	                        <p t-esc="get_account(data)"/>
+	                    </div>
+	                    <div class="col-xs-3">
+	                        <strong>Fiscal Year:</strong>
+	                        <p t-esc="get_fiscalyear(data)"/>
+	                    </div>
+	                    <div class="col-xs-3">
+	                        <strong>Periods:</strong>
+	                        <p>
+	                            Start Period: <span t-esc="get_start_period(data)"/><br/>
+	                            End Period: <span t-esc="get_end_period(data)"/>
+	                        </p>
+	                    </div>
+	                </div>
+	                <table class="table table-condensed">
+	                    <thead>
+	                        <tr>
+	                            <th class="text-left">Compte</th>
+	                            <th class="text-left">TVA</th>
+	                            <th class="text-center">Base</th>
+	                            <th class="text-center">Tva Débit</th>
+	                            <th class="text-center">Tva Crédit</th>
+	                        </tr>
+	                    </thead>
+	                    <t t-set="sumdeb_tot" t-value="0"/>
+						<t t-set="sumcre_tot" t-value="0"/>
+						<t t-set="sumbase_tot" t-value="0"/>
+						<t t-set="sumdeb" t-value="0"/>
+						<t t-set="sumcre" t-value="0"/>
+						<t t-set="sumbase" t-value="0"/>
+						<t t-set="compte" t-value="data['form']['zenvatlines'][0]['code'][0:2]"/>
+	                    <tbody>
+	                        <tr t-foreach="data['form']['zenvatlines']" t-as="ligne">
+	                        	<t t-set="changed" t-value="compte!=ligne['code'][0:2]"/>
+	                        	<t t-if="changed">
+	                        		<tr>
+	                        			<td class="text-right" style="font-weight: bold;">Total compte</td>
+	                    				<td class="text-right" style="font-weight: bold;"><span t-esc="compte"/></td>
+	                    				<td class="text-center" style="font-weight: bold;"><span t-esc="'{0:,.2f}'.format(sumbase)"/></td>
+	                    				<td class="text-center" style="font-weight: bold;"><span t-esc="'{0:,.2f}'.format(sumdeb)"/></td>
+	                    				<td class="text-center" style="font-weight: bold;"><span t-esc="'{0:,.2f}'.format(sumcre)"/></td>
+	                        		</tr>
+	                        		<t t-set="sumdeb" t-value="0"/>
+									<t t-set="sumcre" t-value="0"/>
+									<t t-set="sumbase" t-value="0"/>
+									<t t-set="compte" t-value="ligne['code'][0:2]"/>
+	                        	</t>
+	       						<t t-set="sumdeb" t-value="sumdeb+ligne['debit']"/>
+								<t t-set="sumcre" t-value="sumcre+ligne['credit']"/>
+								<t t-set="sumbase" t-value="sumbase+ligne['tax_amount']"/>                 	
+	                        	
+	                        	
+	                        	
+	                        	
+	                        	
+	                            <td ><span t-esc="ligne['code']"/>-<span t-esc="ligne['name']"/></td>
+	                            <td class="text-left"><span t-esc="ligne['tax']"/></td>
+	                            <td class="text-center"><span t-esc="'{0:,.2f}'.format(ligne['tax_amount'])"/></td>
+	                            <td class="text-center"><span t-esc="'{0:,.2f}'.format(ligne['debit'])"/></td>
+	                            <td class="text-center"><span t-esc="'{0:,.2f}'.format(ligne['credit'])"/></td>
+	                            
+	                            
+	                            
+	                            <t t-set="sumdeb_tot" t-value="sumdeb_tot+ligne['debit']"/>
+								<t t-set="sumcre_tot" t-value="sumcre_tot+ligne['credit']"/>
+								<t t-set="sumbase_tot" t-value="sumbase_tot+ligne['tax_amount']"/>
+	                        </tr>        
+	                    </tbody>
+	                    	        <tr>
+	                        			<td class="text-right" style="font-weight: bold;">Total compte</td>
+	                    				<td class="text-right" style="font-weight: bold;"><span t-esc="compte"/></td>
+	                    				<td class="text-center" style="font-weight: bold;"><span t-esc="'{0:,.2f}'.format(sumbase)"/></td>
+	                    				<td class="text-center" style="font-weight: bold;"><span t-esc="'{0:,.2f}'.format(sumdeb)"/></td>
+	                    				<td class="text-center" style="font-weight: bold;"><span t-esc="'{0:,.2f}'.format(sumcre)"/></td>
+	                        		</tr>
+	                    
+	                    
+	                    	<tr>
+	                    		<td></td>
+	                    		<td style="font-weight: bold;">TOTAL</td>
+	                    		<td style="font-weight: bold;" class="text-center"><span t-esc="'{0:,.2f}'.format(sumbase_tot)"/></td>
+	                    		<td style="font-weight: bold;" class="text-center"><span t-esc="'{0:,.2f}'.format(sumdeb_tot)"/></td>
+	                    		<td style="font-weight: bold;" class="text-center"><span t-esc="'{0:,.2f}'.format(sumcre_tot)"/></td>
+	                    		
+	                    	
+	                    	
+	                    	</tr>
+	                </table>  -->
+	            </div>
+	        </t>
+	    </t>
+	</template>
+        
+    
+
+        <record id="easy_crossovered_report_view" model="ir.ui.view">
+          <field name="name">easy.crossovered.report.form</field>
+          <field name="model">easy.crossovered.report</field>
+          <field name="arch" type="xml">
+                  <form string="Description">
+                  <group>
+                    <field name="company"/>
+        			<field name="crossovered1"/>
+        			<field name="crossovered2"/>
+    				<field name="acount_analytics"/>
+    				<field name="account_budget_post"/>
+        		  </group>
+        		  <footer>
+                    <button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    or 
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+        		</form>
+          </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_easy_crossovered_report_model">
+            <field name="name">Crossovered Report Model</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">easy.crossovered.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+	          
+    
+    <menuitem
+	        sequence="200"
+	        parent="base.menu_sales"
+	        id="menu_action_easy_crossovered_report_model"
+	        action="action_easy_crossovered_report_model"/>
+        
+    </data>
+</openerp>
